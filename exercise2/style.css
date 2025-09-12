@@ -1,0 +1,646 @@
+html, body {
+  margin: 0;
+  background:#000;
+  color:#000000;
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  height: 100%;
+}
+
+/* Heartbeat glow overlay - Make it more visible and ensure it's on top */
+#heartbeat-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  /* Start with very low values */
+  --pulse-alpha: 0.05;  /* Almost invisible */
+  --pulse-size: 20%;    /* Small size */
+  --pulse-blur: 80px;   /* High blur */
+
+  /* Red radial glow - make it more visible */
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255,0,0,var(--pulse-alpha)) 0%,
+      rgba(255,0,0,calc(var(--pulse-alpha) * 0.8)) 20%,
+      rgba(255,0,0,calc(var(--pulse-alpha) * 0.6)) 40%,
+      rgba(255,0,0,calc(var(--pulse-alpha) * 0.4)) 60%,
+      rgba(255,0,0,calc(var(--pulse-alpha) * 0.2)) 80%,
+      rgba(255,0,0,0) var(--pulse-size)
+    );
+  filter: blur(var(--pulse-blur));
+  transition: background 100ms ease-out, filter 100ms ease-out;
+  z-index: 9999; /* Much higher z-index to ensure it's on top */
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #heartbeat-glow { display:none; }
+}
+
+/* Story sections - FIXED: Remove overflow hidden for sticky to work */
+.story-section {
+  height: 700vh; /* 12 viewport heights - requires 12 full scrolls to get through */
+  width: 100vw;  /* Full viewport width */
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 0; /* Lower z-index than glow */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center;
+  justify-content: flex-start; /* Start from top */
+}
+
+#intro-story {
+  background: #000; /* Pure black */
+}
+
+/* First story section - Completely black */
+#first-story {
+  background: #000; /* Pure black */
+  height: 1000vh; /* 12 viewport heights - requires 12 full scrolls to get through */
+}
+
+/* Second story section - Completely black */
+#second-story {
+  background-image: linear-gradient(rgb(108, 0, 0),rgba(0, 0, 0, 0));
+}
+
+/* Title styling - Start in middle, then stick to top */
+.title {
+  position: sticky;
+  top: 10vh; /* Stick to very top of viewport when scrolling */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  z-index: 30; /* Higher than sections but lower than glow */
+  color: #ece29f;
+  opacity: 0.9;
+  margin: 0;
+  padding: 20px;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  /* Make sure it doesn't interfere with other elements */
+  pointer-events: none;
+
+  /* Start positioned in the middle of the first section */
+  margin-top: 50vh; /* Push it down to start in middle of viewport */
+}
+
+/* Title styling - Start in middle, then stick to top */
+.bottom-title {
+  position: sticky;
+  top: 10vh; /* Stick to very top of viewport when scrolling */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  z-index: 30; /* Higher than sections but lower than glow */
+  color: #000000;
+  opacity: 0.9;
+  margin: 0;
+  padding: 20px;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  /* Make sure it doesn't interfere with other elements */
+  pointer-events: none;
+
+  /* Start positioned in the middle of the first section */
+  margin-top: 50vh; /* Push it down to start in middle of viewport */
+}
+
+/* Your content container */
+.text{
+  max-width: 60ch;
+  padding: 24px;
+  position: relative;
+  z-index: 2; /* Lower than glow */
+  line-height: 1.8;
+  max-height: 80vh; /* Limit height so content fits in viewport */
+  overflow-y: auto; /* Allow scrolling within the section if content is too long */
+}
+
+/* Add some spacing between sections */
+.text br + br {
+  margin: 2em 0;
+}
+
+/* Image gallery styling */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.image-gallery p {
+  background: rgba(255,0,0,0.1);
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid rgba(255,0,0,0.3);
+  border-radius: 8px;
+}
+
+/* Section headers */
+h2 {
+  color: #ff4444;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Smooth scrolling between sections */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== CLOCK SECTION ===== */
+.clock-section {
+  background: radial-gradient(circle, #ff000000 0%, #83000038 30%, #7c0000 100%, #000000 100%);
+  width: 100vw; 
+  color: #000;
+  height: 2400vh; /* Much longer - 24 viewport heights for all 12 images */
+  padding: 2rem 0;
+  position: relative;
+  z-index: 5;
+  overflow: visible; /* Allow scrolling */
+}
+
+.clock-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  height: 100vh; /* Fixed height for the clock itself */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: sticky; /* Make clock sticky */
+  top: 0; /* Stick to top of viewport */
+}
+
+/* Canvas Clock - Simplified, no shadows or borders */
+#clockCanvas {
+  background: transparent; /* No background */
+  z-index: 20;
+}
+
+/* Main Clock Images (1-12) */
+.image-overlay {
+  position: absolute;
+  width: 100px; /* Much bigger - increased from 80px */
+  height: 100px; /* Much bigger - increased from 80px */
+  background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5; /* Higher z-index to be on top of canvas numbers */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-overlay.active {
+  opacity: 1;
+}
+
+/* Additional Images Around Page (13-24) - Randomly placed across entire page */
+.additional-image {
+  position: fixed; /* Fixed positioning to place anywhere on page */
+  width: 100px; /* Smaller than main images */
+  height: 100px;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%); /* Different color - red/pink */
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease; /* Faster transition */
+  z-index: 8; /* Below main images but above background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.additional-image.active {
+  opacity: 1;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1rem; /* Smaller font for additional images */
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Position main images directly on top of numbers - MUCH MORE OVERLAPPED */
+.image-overlay[data-number="12"] { top: calc(50% - 229px); left: 50%; } /* 12 o'clock */
+.image-overlay[data-number="1"] { top: calc(50% - 150px); left: calc(50% + 100px); } /* 1 o'clock - MUCH MORE IN */
+.image-overlay[data-number="2"] { top: calc(50% - 99px); left: calc(50% + 198px); } /* 2 o'clock */
+.image-overlay[data-number="3"] { top: 50%; left: calc(50% + 229px); } /* 3 o'clock */
+.image-overlay[data-number="4"] { top: calc(50% + 99px); left: calc(50% + 198px); } /* 4 o'clock */
+.image-overlay[data-number="5"] { top: calc(50% + 150px); left: calc(50% + 100px); } /* 5 o'clock - MUCH MORE IN */
+.image-overlay[data-number="6"] { top: calc(50% + 229px); left: 50%; } /* 6 o'clock */
+.image-overlay[data-number="7"] { top: calc(50% + 150px); left: calc(50% - 100px); } /* 7 o'clock - MUCH MORE IN */
+.image-overlay[data-number="8"] { top: calc(50% + 99px); left: calc(50% - 198px); } /* 8 o'clock */
+.image-overlay[data-number="9"] { top: 50%; left: calc(50% - 229px); } /* 9 o'clock */
+.image-overlay[data-number="10"] { top: calc(50% - 99px); left: calc(50% - 198px); } /* 10 o'clock */
+.image-overlay[data-number="11"] { top: calc(50% - 150px); left: calc(50% - 100px); } /* 11 o'clock - MUCH MORE IN */
+
+/* Position additional images randomly across the entire page */
+.additional-image[data-additional-number="13"] { top: 15%; left: 20%; }
+.additional-image[data-additional-number="14"] { top: 25%; left: 80%; }
+.additional-image[data-additional-number="15"] { top: 40%; left: 10%; }
+.additional-image[data-additional-number="16"] { top: 60%; left: 90%; }
+.additional-image[data-additional-number="17"] { top: 75%; left: 15%; }
+.additional-image[data-additional-number="18"] { top: 85%; left: 85%; }
+.additional-image[data-additional-number="19"] { top: 10%; left: 50%; }
+.additional-image[data-additional-number="20"] { top: 35%; left: 70%; }
+.additional-image[data-additional-number="21"] { top: 55%; left: 30%; }
+.additional-image[data-additional-number="22"] { top: 80%; left: 60%; }
+.additional-image[data-additional-number="23"] { top: 20%; left: 40%; }
+.additional-image[data-additional-number="24"] { top: 70%; left: 5%; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #clockCanvas {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .image-overlay {
+    width: 100px; /* Smaller for mobile but still bigger than before */
+    height: 100px;
+  }
+  
+  .additional-image {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .image-placeholder {
+    font-size: 0.8rem;
+  }
+  
+  /* Adjust positions for smaller clock - MOVED 1, 5, 7, 11 MUCH MORE IN */
+  .image-overlay[data-number="12"] { top: calc(50% - 130px); left: 50%; } /* 12 o'clock */
+  .image-overlay[data-number="1"] { top: calc(50% - 85px); left: calc(50% + 57px); } /* 1 o'clock - MUCH MORE IN */
+  .image-overlay[data-number="2"] { top: calc(50% - 65px); left: calc(50% + 130px); } /* 2 o'clock */
+  .image-overlay[data-number="3"] { top: 50%; left: calc(50% + 130px); } /* 3 o'clock */
+  .image-overlay[data-number="4"] { top: calc(50% + 65px); left: calc(50% + 130px); } /* 4 o'clock */
+  .image-overlay[data-number="5"] { top: calc(50% + 85px); left: calc(50% + 57px); } /* 5 o'clock - MUCH MORE IN */
+  .image-overlay[data-number="6"] { top: calc(50% + 130px); left: 50%; } /* 6 o'clock */
+  .image-overlay[data-number="7"] { top: calc(50% + 85px); left: calc(50% - 57px); } /* 7 o'clock - MUCH MORE IN */
+  .image-overlay[data-number="8"] { top: calc(50% + 65px); left: calc(50% - 130px); } /* 8 o'clock */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 130px); } /* 9 o'clock */
+  .image-overlay[data-number="10"] { top: calc(50% - 65px); left: calc(50% - 130px); } /* 10 o'clock */
+  .image-overlay[data-number="11"] { top: calc(50% - 85px); left: calc(50% - 57px); } /* 11 o'clock - MUCH MORE IN */
+  
+  /* Adjust additional images for mobile - still random across page */
+  .additional-image[data-additional-number="13"] { top: 10%; left: 15%; }
+  .additional-image[data-additional-number="14"] { top: 20%; left: 85%; }
+  .additional-image[data-additional-number="15"] { top: 35%; left: 5%; }
+  .additional-image[data-additional-number="16"] { top: 55%; left: 95%; }
+  .additional-image[data-additional-number="17"] { top: 70%; left: 10%; }
+  .additional-image[data-additional-number="18"] { top: 80%; left: 80%; }
+  .additional-image[data-additional-number="19"] { top: 5%; left: 45%; }
+  .additional-image[data-additional-number="20"] { top: 30%; left: 65%; }
+  .additional-image[data-additional-number="21"] { top: 50%; left: 25%; }
+  .additional-image[data-additional-number="22"] { top: 75%; left: 55%; }
+  .additional-image[data-additional-number="23"] { top: 15%; left: 35%; }
+  .additional-image[data-additional-number="24"] { top: 65%; left: 2%; }
+}
+
+/* Image styling for clock images */
+.clock-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio and fill container */
+  border-radius: 0px; /* Slightly smaller radius than container */
+}
+
+.additional-clock-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio and fill container */
+  border-radius: 0px; /* Slightly smaller radius than container */
+}
+
+/* Remove the old placeholder styling since we're using real images */
+.image-placeholder {
+  display: none; /* Hide placeholder text since we have real images */
+}
+
+
+.additional-image {
+  opacity: 1 !important;
+}
+
+/* Ensure additional images are completely hidden initially */
+.additional-image {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+.additional-image.active {
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+/* Move images 1, 5, 7, 11 further out for perfect circle */
+.image-overlay[data-number="1"] { top: calc(50% - 120px); left: calc(50% + 200px); } /* 1 o'clock - further out */
+.image-overlay[data-number="5"] { top: calc(50% + 120px); left: calc(50% + 200px); } /* 5 o'clock - further out */
+.image-overlay[data-number="7"] { top: calc(50% + 120px); left: calc(50% - 200px); } /* 7 o'clock - further out */
+.image-overlay[data-number="11"] { top: calc(50% - 120px); left: calc(50% - 200px); } /* 11 o'clock - further out */
+
+/* Mobile adjustments for perfect circle */
+@media (max-width: 768px) {
+  .image-overlay[data-number="1"] { top: calc(50% - 70px); left: calc(50% + 120px); } /* 1 o'clock - mobile */
+  .image-overlay[data-number="5"] { top: calc(50% + 70px); left: calc(50% + 120px); } /* 5 o'clock - mobile */
+  .image-overlay[data-number="7"] { top: calc(50% + 70px); left: calc(50% - 120px); } /* 7 o'clock - mobile */
+  .image-overlay[data-number="11"] { top: calc(50% - 70px); left: calc(50% - 120px); } /* 11 o'clock - mobile */
+}
+
+/* Fix positioning for images 1, 5, 7, 11 to be directly on their numbers */
+.image-overlay[data-number="1"] { top: calc(50% - 150px); left: calc(50% + 150px); } /* 1 o'clock - directly on number */
+.image-overlay[data-number="5"] { top: calc(50% + 150px); left: calc(50% + 150px); } /* 5 o'clock - directly on number */
+.image-overlay[data-number="7"] { top: calc(50% + 150px); left: calc(50% - 150px); } /* 7 o'clock - directly on number */
+.image-overlay[data-number="11"] { top: calc(50% - 150px); left: calc(50% - 150px); } /* 11 o'clock - directly on number */
+
+/* Mobile adjustments to be directly on numbers */
+@media (max-width: 768px) {
+  .image-overlay[data-number="1"] { top: calc(50% - 85px); left: calc(50% + 85px); } /* 1 o'clock - mobile */
+  .image-overlay[data-number="5"] { top: calc(50% + 85px); left: calc(50% + 85px); } /* 5 o'clock - mobile */
+  .image-overlay[data-number="7"] { top: calc(50% + 85px); left: calc(50% - 85px); } /* 7 o'clock - mobile */
+  .image-overlay[data-number="11"] { top: calc(50% - 85px); left: calc(50% - 85px); } /* 11 o'clock - mobile */
+}
+
+/* Fix images 1, 4, 7, 11 to match the positioning of correctly placed images */
+.image-overlay[data-number="1"] { top: calc(50% - 99px); left: calc(50% + 198px); } /* Match image 2 positioning */
+.image-overlay[data-number="4"] { top: calc(50% + 99px); left: calc(50% + 198px); } /* Match image 2 positioning */
+.image-overlay[data-number="7"] { top: calc(50% + 99px); left: calc(50% - 198px); } /* Match image 8 positioning */
+.image-overlay[data-number="11"] { top: calc(50% - 99px); left: calc(50% - 198px); } /* Match image 10 positioning */
+
+/* Mobile adjustments to match correctly placed images */
+@media (max-width: 768px) {
+  .image-overlay[data-number="1"] { top: calc(50% - 65px); left: calc(50% + 130px); } /* Match mobile image 2 */
+  .image-overlay[data-number="4"] { top: calc(50% + 65px); left: calc(50% + 130px); } /* Match mobile image 2 */
+  .image-overlay[data-number="7"] { top: calc(50% + 65px); left: calc(50% - 130px); } /* Match mobile image 8 */
+  .image-overlay[data-number="11"] { top: calc(50% - 65px); left: calc(50% - 130px); } /* Match mobile image 10 */
+}
+
+/* Restore images 1, 4, 7, 11 with proper positioning */
+.image-overlay[data-number="1"] { top: calc(50% - 150px); left: calc(50% + 150px); } /* 1 o'clock */
+.image-overlay[data-number="4"] { top: calc(50% + 99px); left: calc(50% + 198px); } /* 4 o'clock */
+.image-overlay[data-number="7"] { top: calc(50% + 150px); left: calc(50% - 150px); } /* 7 o'clock */
+.image-overlay[data-number="11"] { top: calc(50% - 150px); left: calc(50% - 150px); } /* 11 o'clock */
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .image-overlay[data-number="1"] { top: calc(50% - 85px); left: calc(50% + 85px); } /* 1 o'clock mobile */
+  .image-overlay[data-number="4"] { top: calc(50% + 65px); left: calc(50% + 130px); } /* 4 o'clock mobile */
+  .image-overlay[data-number="7"] { top: calc(50% + 85px); left: calc(50% - 85px); } /* 7 o'clock mobile */
+  .image-overlay[data-number="11"] { top: calc(50% - 85px); left: calc(50% - 85px); } /* 11 o'clock mobile */
+}
+
+.image-overlay.active {
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+/* Fine-tune positioning for images 1, 5, 7, 11 */
+.image-overlay[data-number="1"] { top: calc(50% - 170px); left: calc(50% + 130px); } /* 1: more left and up */
+.image-overlay[data-number="5"] { top: calc(50% + 170px); left: calc(50% + 130px); } /* 5: more down and left */
+.image-overlay[data-number="7"] { top: calc(50% + 170px); left: calc(50% - 130px); } /* 7: more down and right */
+.image-overlay[data-number="11"] { top: calc(50% - 170px); left: calc(50% - 130px); } /* 11: more up and right */
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .image-overlay[data-number="1"] { top: calc(50% - 95px); left: calc(50% + 75px); } /* 1: mobile - more left and up */
+  .image-overlay[data-number="5"] { top: calc(50% + 95px); left: calc(50% + 75px); } /* 5: mobile - more down and left */
+  .image-overlay[data-number="7"] { top: calc(50% + 95px); left: calc(50% - 75px); } /* 7: mobile - more down and right */
+  .image-overlay[data-number="11"] { top: calc(50% - 95px); left: calc(50% - 75px); } /* 11: mobile - more up and right */
+}
+
+/* Even more pronounced positioning for images 1, 5, 7, 11 */
+.image-overlay[data-number="1"] { top: calc(50% - 200px); left: calc(50% + 100px); } /* 1: even more left and up */
+.image-overlay[data-number="5"] { top: calc(50% + 200px); left: calc(50% + 100px); } /* 5: even more down and left */
+.image-overlay[data-number="7"] { top: calc(50% + 200px); left: calc(50% - 100px); } /* 7: even more down and right */
+.image-overlay[data-number="11"] { top: calc(50% - 200px); left: calc(50% - 100px); } /* 11: even more up and right */
+
+/* Mobile adjustments - even more pronounced */
+@media (max-width: 768px) {
+  .image-overlay[data-number="1"] { top: calc(50% - 110px); left: calc(50% + 60px); } /* 1: mobile - even more left and up */
+  .image-overlay[data-number="5"] { top: calc(50% + 110px); left: calc(50% + 60px); } /* 5: mobile - even more down and left */
+  .image-overlay[data-number="7"] { top: calc(50% + 110px); left: calc(50% - 60px); } /* 7: mobile - even more down and right */
+  .image-overlay[data-number="11"] { top: calc(50% - 110px); left: calc(50% - 60px); } /* 11: mobile - even more up and right */
+}
+
+/* Ensure proper scroll animation - images start hidden */
+.image-overlay {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.image-overlay.active {
+  opacity: 1;
+}
+
+.additional-image {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.additional-image.active {
+  opacity: 1;
+}
+
+/* Mobile adjustments - images below numbers */
+@media (max-width: 768px) {
+  .image-overlay[data-number="12"] { top: calc(50% - 90px); left: 50%; } /* 12 o'clock mobile */
+  .image-overlay[data-number="1"] { top: calc(50% - 70px); left: calc(50% + 70px); } /* 1 o'clock mobile */
+  .image-overlay[data-number="2"] { top: calc(50% - 50px); left: calc(50% + 120px); } /* 2 o'clock mobile */
+  .image-overlay[data-number="3"] { top: 50%; left: calc(50% + 130px); } /* 3 o'clock mobile */
+  .image-overlay[data-number="4"] { top: calc(50% + 50px); left: calc(50% + 120px); } /* 4 o'clock mobile */
+  .image-overlay[data-number="5"] { top: calc(50% + 70px); left: calc(50% + 70px); } /* 5 o'clock mobile */
+  .image-overlay[data-number="6"] { top: calc(50% + 90px); left: 50%; } /* 6 o'clock mobile */
+  .image-overlay[data-number="7"] { top: calc(50% + 70px); left: calc(50% - 70px); } /* 7 o'clock mobile */
+  .image-overlay[data-number="8"] { top: calc(50% + 50px); left: calc(50% - 120px); } /* 8 o'clock mobile */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 130px); } /* 9 o'clock mobile */
+  .image-overlay[data-number="10"] { top: calc(50% - 50px); left: calc(50% - 120px); } /* 10 o'clock mobile */
+  .image-overlay[data-number="11"] { top: calc(50% - 70px); left: calc(50% - 70px); } /* 11 o'clock mobile */
+}
+
+/* Restore original positioning that was working well */
+.image-overlay[data-number="12"] { top: calc(50% - 229px); left: 50%; } /* 12 o'clock */
+.image-overlay[data-number="1"] { top: calc(50% - 200px); left: calc(50% + 100px); } /* 1 o'clock */
+.image-overlay[data-number="2"] { top: calc(50% - 99px); left: calc(50% + 198px); } /* 2 o'clock */
+.image-overlay[data-number="3"] { top: 50%; left: calc(50% + 229px); } /* 3 o'clock */
+.image-overlay[data-number="4"] { top: calc(50% + 99px); left: calc(50% + 198px); } /* 4 o'clock */
+.image-overlay[data-number="5"] { top: calc(50% + 200px); left: calc(50% + 100px); } /* 5 o'clock */
+.image-overlay[data-number="6"] { top: calc(50% + 229px); left: 50%; } /* 6 o'clock */
+.image-overlay[data-number="7"] { top: calc(50% + 200px); left: calc(50% - 100px); } /* 7 o'clock */
+.image-overlay[data-number="8"] { top: calc(50% + 99px); left: calc(50% - 198px); } /* 8 o'clock */
+.image-overlay[data-number="9"] { top: 50%; left: calc(50% - 229px); } /* 9 o'clock */
+.image-overlay[data-number="10"] { top: calc(50% - 99px); left: calc(50% - 198px); } /* 10 o'clock */
+.image-overlay[data-number="11"] { top: calc(50% - 200px); left: calc(50% - 100px); } /* 11 o'clock */
+
+/* Mobile adjustments - restore original */
+@media (max-width: 768px) {
+  .image-overlay[data-number="12"] { top: calc(50% - 130px); left: 50%; } /* 12 o'clock mobile */
+  .image-overlay[data-number="1"] { top: calc(50% - 110px); left: calc(50% + 60px); } /* 1 o'clock mobile */
+  .image-overlay[data-number="2"] { top: calc(50% - 65px); left: calc(50% + 130px); } /* 2 o'clock mobile */
+  .image-overlay[data-number="3"] { top: 50%; left: calc(50% + 130px); } /* 3 o'clock mobile */
+  .image-overlay[data-number="4"] { top: calc(50% + 65px); left: calc(50% + 130px); } /* 4 o'clock mobile */
+  .image-overlay[data-number="5"] { top: calc(50% + 110px); left: calc(50% + 60px); } /* 5 o'clock mobile */
+  .image-overlay[data-number="6"] { top: calc(50% + 130px); left: 50%; } /* 6 o'clock mobile */
+  .image-overlay[data-number="7"] { top: calc(50% + 110px); left: calc(50% - 60px); } /* 7 o'clock mobile */
+  .image-overlay[data-number="8"] { top: calc(50% + 65px); left: calc(50% - 130px); } /* 8 o'clock mobile */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 130px); } /* 9 o'clock mobile */
+  .image-overlay[data-number="10"] { top: calc(50% - 65px); left: calc(50% - 130px); } /* 10 o'clock mobile */
+  .image-overlay[data-number="11"] { top: calc(50% - 110px); left: calc(50% - 60px); } /* 11 o'clock mobile */
+}
+
+/* Make additional images disappear more smoothly */
+.additional-image {
+  opacity: 0;
+  transition: opacity 2s ease-in-out; /* Slower, smoother transition */
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* Add scale transition */
+}
+
+.additional-image.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Add a fade-out effect when removing active class */
+.additional-image:not(.active) {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.5); /* Slight scale down when fading out */
+  transition: opacity 2s ease-out, transform 2s ease-out; /* Longer fade-out */
+}
+
+/* Clock section title - centered without margin-top */
+
+/* Fix clock section title centering */
+
+/* Force clock section title to center with absolute positioning */
+
+/* Alternative centering approach for clock title */
+
+/* Clean clock section title centering */
+.clock-section .title {
+  position: sticky;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  z-index: 10;
+  color: #fff;
+  opacity: 0.9;
+  padding: 20px;
+  pointer-events: none;
+}
+
+/* Force center with flexbox approach */
+.clock-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.clock-section .title {
+  position: sticky;
+  top: 0;
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  z-index: 10;
+  color: #fff;
+  opacity: 0.9;
+  padding: 20px;
+  pointer-events: none;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Last resort - absolute positioning within clock section */
+.clock-section .title {
+  position: sticky !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-top: 0 !important;
+  font-size: 2rem !important;
+  font-weight: 300 !important;
+  text-align: center !important;
+  z-index: 10 !important;
+  color: #ece29f !important;
+  opacity: 0.9 !important;
+  padding: 20px !important;
+  pointer-events: none !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+
+/* Simple red music player button */
+.music-player {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.music-toggle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ff0000;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.music-toggle-btn:hover {
+  background: #cc0000;
+  transform: scale(1.1);
+}
+
+.music-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.music-toggle-btn.playing {
+  background: #00ff00;
+}
+
+.music-toggle-btn.playing:hover {
+  background: #00cc00;
+}
+
+/* Hide the default audio controls */
+audio {
+  display: none;
+}

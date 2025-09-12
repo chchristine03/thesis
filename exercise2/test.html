@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            height: 200vh; /* Make it scrollable */
+        }
+        .test-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255,0,0,0.8) 0%, transparent 8%);
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-glow"></div>
+    <div style="position: relative; z-index: 2; padding: 20px;">
+        <h1>TEST PAGE</h1>
+        <p>You should see a red glow covering the screen.</p>
+        <p>Scroll down to see more content...</p>
+        <br><br><br><br><br><br><br><br><br><br>
+        <p>More content here...</p>
+        <br><br><br><br><br><br><br><br><br><br>
+        <p>Even more content...</p>
+    </div>
+</body>
+</html>
