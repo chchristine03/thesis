@@ -195,7 +195,7 @@
       ctx.clearRect(-radius, -radius, radius * 2, radius * 2);
       
       // Draw only numbers and hands - no background, no shadows, no circles
-      drawNumbers(ctx, radius);
+      // drawNumbers(ctx, radius); // Hidden clock numbers
       drawTime(ctx, radius);
     }
     
@@ -335,6 +335,7 @@
   }
 
   function onScroll(){
+    updateProgressBar();
     if (!ticking){
       requestAnimationFrame(() => {
         update();
@@ -355,7 +356,8 @@
   updateClockImagesSmoothExit();
   
   console.log('Script loaded and initial update done');
-})();
+  // Initial progress bar update
+  updateProgressBar();})();
 
 
 // Add debugging to see scroll progress
@@ -542,3 +544,86 @@ function updateClockImagesSmoothExit() {
     });
   }
 }
+
+// Progress Bar Functionality
+function updateProgressBar() {
+  const y = window.scrollY || 0;
+  const windowHeight = window.innerHeight;
+  const progressBar = document.getElementById("progress-bar");
+  const progressText = document.getElementById("progress-text");
+  
+  if (!progressBar || !progressText) return;
+  
+  // Get all sections
+  const introStory = document.getElementById("intro-story");
+  const firstStory = document.getElementById("first-story");
+  const clockStory = document.getElementById("clock-story");
+  const secondStory = document.getElementById("second-story");
+  
+  // Define section information
+  const sections = [
+    { element: introStory, name: "Intro Story", height: 700 },
+    { element: firstStory, name: "Heartbeat", height: 1000 },
+    { element: clockStory, name: "Clock", height: 2400 },
+    { element: secondStory, name: "Final", height: 100 }
+  ];
+  
+  // Calculate total page height
+  let totalPageHeight = 0;
+  let sectionPositions = [];
+  
+  for (let i = 0; i < sections.length; i++) {
+    const section = sections[i];
+    if (!section.element) continue;
+    
+    const sectionTop = section.element.offsetTop;
+    const sectionHeight = windowHeight * (section.height / 100); // Convert vh to pixels
+    
+    sectionPositions.push({
+      ...section,
+      top: sectionTop,
+      height: sectionHeight,
+      bottom: sectionTop + sectionHeight
+    });
+    
+    totalPageHeight += sectionHeight;
+  }
+  
+  // Calculate overall progress (0 to 1)
+  const overallProgress = Math.min(1, Math.max(0, y / totalPageHeight));
+  
+  // Find which section we are currently in
+  let currentSection = null;
+  for (let i = 0; i < sectionPositions.length; i++) {
+    const section = sectionPositions[i];
+    if (y >= section.top && y < section.bottom) {
+      currentSection = section;
+      break;
+    }
+  }
+  
+  // Update progress bar and text
+  if (currentSection) {
+    progressBar.style.width = (overallProgress * 100) + "%";
+    progressText.textContent = currentSection.name;
+    
+    // Add visual feedback for different progress levels across entire page
+    if (overallProgress < 0.25) {
+      progressBar.style.background = "linear-gradient(90deg, #ece29f 0%, #f47070 50%, #ff6b6b 100%)";
+    } else if (overallProgress < 0.5) {
+      progressBar.style.background = "linear-gradient(90deg, #f47070 0%, #ff6b6b 50%, #ff4444 100%)";
+    } else if (overallProgress < 0.75) {
+      progressBar.style.background = "linear-gradient(90deg, #ff6b6b 0%, #ff4444 50%, #cc0000 100%)";
+    } else {
+      progressBar.style.background = "linear-gradient(90deg, #ff4444 0%, #cc0000 50%, #990000 100%)";
+    }
+  } else {
+    // If not in any section, hide progress bar
+    progressBar.style.width = "0%";
+    progressText.textContent = "";
+  }
+}
+
+// Initial progress bar update
+updateProgressBar();
+

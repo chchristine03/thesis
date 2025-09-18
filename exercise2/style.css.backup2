@@ -50,60 +50,22 @@ html, body {
   display: flex;
   flex-direction: column; /* Stack content vertically */
   align-items: center;
+  justify-content: flex-start; /* Start from top */
 }
 
-.intro-title{
-  font-size: 10rem;
-  font-weight: 300;
-  text-align: center;
-  z-index: 30;
-  color: #ece29f;
-  font-family: "helvetica-neue-lt-pro", sans-serif;
-}
 #intro-story {
-  background-color: black;
-  background-size: contain;
-  background-position: top;
-  background-repeat: no-repeat;
-  height: 700vh; /* Same height as other story sections */
-  width:100vw;
-  scroll-snap-align: start; /* Snap to start of section */
-}
-.gradient{
-  height: 100px; /* Adjust height as needed */
-  background-image: linear-gradient(to bottom, #a7000000 0%,#530f8a65 80%, #530f8acf 100%); /* Fades from black to transparent */
-  width: 100vw;
-  height: 30vh;
-  position: fixed;
-  bottom: 0;
-  z-index: 0;
-}
-
-.icon img{
-  width: 10%;
-  height: 10%;
-  object-fit: cover;
-  margin-bottom:3vh;
-}
-
-.bottom {
-  display:flex;
-  justify-content: center;
-  position:fixed;
-  bottom: 0;
+  background: #000; /* Pure black */
 }
 
 /* First story section - Completely black */
 #first-story {
   background: #000; /* Pure black */
   height: 1000vh; /* 12 viewport heights - requires 12 full scrolls to get through */
-  scroll-snap-align: start; /* Snap to start of section */
 }
 
 /* Second story section - Completely black */
 #second-story {
   background-image: linear-gradient(rgb(108, 0, 0),rgba(0, 0, 0, 0));
-  scroll-snap-align: start; /* Snap to start of section */
 }
 
 /* Title styling - Start in middle, then stick to top */
@@ -219,11 +181,6 @@ h2 {
 /* Smooth scrolling between sections */
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
-}
-
-body {
-  scroll-snap-type: y mandatory;
 }
 
 /* ===== CLOCK SECTION ===== */
@@ -236,21 +193,20 @@ body {
   position: relative;
   z-index: 5;
   overflow: visible; /* Allow scrolling */
-  scroll-snap-align: start; /* Snap to start of section */
 }
 
 .clock-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-  position: sticky; /* Make clock sticky within the section */
-  top: 0; /* Stick to top of viewport */
+  position: relative;
   height: 100vh; /* Fixed height for the clock itself */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 10; /* Ensure it stays above other elements */
+  position: sticky; /* Make clock sticky */
+  top: 0; /* Stick to top of viewport */
 }
 
 /* Canvas Clock - Simplified, no shadows or borders */
@@ -311,19 +267,19 @@ body {
 
 /* ===== CLEAN CIRCULAR POSITIONING FOR CLOCK IMAGES ===== */
 
-/* Desktop positioning - All 12 clock images positioned in perfect circle using trigonometry */
-.image-overlay[data-number="1"] { top: calc(50% - 173px); left: calc(50% + 100px); } /* 1 o'clock */
-.image-overlay[data-number="2"] { top: calc(50% - 100px); left: calc(50% + 173px); } /* 2 o'clock */
-.image-overlay[data-number="3"] { top: calc(50% + 0px); left: calc(50% + 200px); } /* 3 o'clock */
-.image-overlay[data-number="4"] { top: calc(50% + 100px); left: calc(50% + 173px); } /* 4 o'clock */
-.image-overlay[data-number="5"] { top: calc(50% + 173px); left: calc(50% + 100px); } /* 5 o'clock */
-.image-overlay[data-number="6"] { top: calc(50% + 200px); left: calc(50% + 0px); } /* 6 o'clock */
-.image-overlay[data-number="7"] { top: calc(50% + 173px); left: calc(50% - 100px); } /* 7 o'clock */
-.image-overlay[data-number="8"] { top: calc(50% + 100px); left: calc(50% - 173px); } /* 8 o'clock */
-.image-overlay[data-number="9"] { top: calc(50% + 0px); left: calc(50% - 200px); } /* 9 o'clock */
-.image-overlay[data-number="10"] { top: calc(50% - 100px); left: calc(50% - 173px); } /* 10 o'clock */
-.image-overlay[data-number="11"] { top: calc(50% - 173px); left: calc(50% - 100px); } /* 11 o'clock */
-.image-overlay[data-number="12"] { top: calc(50% - 200px); left: calc(50% + 0px); } /* 12 o'clock */
+/* Desktop positioning - All 12 clock images positioned in perfect circle */
+.image-overlay[data-number="1"] { top: calc(50% - 198px); left: calc(50% + 114px); } /* 1 o'clock */
+.image-overlay[data-number="2"] { top: calc(50% - 114px); left: calc(50% + 198px); } /* 2 o'clock */
+.image-overlay[data-number="3"] { top: 50%; left: calc(50% + 229px); } /* 3 o'clock */
+.image-overlay[data-number="4"] { top: calc(50% + 114px); left: calc(50% + 198px); } /* 4 o'clock */
+.image-overlay[data-number="5"] { top: calc(50% + 198px); left: calc(50% + 114px); } /* 5 o'clock */
+.image-overlay[data-number="6"] { top: calc(50% + 229px); left: 50%; } /* 6 o'clock */
+.image-overlay[data-number="7"] { top: calc(50% + 198px); left: calc(50% - 114px); } /* 7 o'clock */
+.image-overlay[data-number="8"] { top: calc(50% + 114px); left: calc(50% - 198px); } /* 8 o'clock */
+.image-overlay[data-number="9"] { top: 50%; left: calc(50% - 229px); } /* 9 o'clock */
+.image-overlay[data-number="10"] { top: calc(50% - 114px); left: calc(50% - 198px); } /* 10 o'clock */
+.image-overlay[data-number="11"] { top: calc(50% - 198px); left: calc(50% - 114px); } /* 11 o'clock */
+.image-overlay[data-number="12"] { top: calc(50% - 229px); left: 50%; } /* 12 o'clock */
 
 /* Position additional images randomly across the entire page */
 .additional-image[data-additional-number="13"] { top: 15%; left: 20%; }
@@ -360,19 +316,19 @@ body {
     font-size: 0.8rem;
   }
   
-  /* Mobile positioning - smaller circle radius using trigonometry */
+  /* Mobile positioning - smaller circle radius */
   .image-overlay[data-number="1"] { top: calc(50% - 130px); left: calc(50% + 75px); } /* 1 o'clock */
   .image-overlay[data-number="2"] { top: calc(50% - 75px); left: calc(50% + 130px); } /* 2 o'clock */
-  .image-overlay[data-number="3"] { top: calc(50% + 0px); left: calc(50% + 150px); } /* 3 o'clock */
+  .image-overlay[data-number="3"] { top: 50%; left: calc(50% + 150px); } /* 3 o'clock */
   .image-overlay[data-number="4"] { top: calc(50% + 75px); left: calc(50% + 130px); } /* 4 o'clock */
   .image-overlay[data-number="5"] { top: calc(50% + 130px); left: calc(50% + 75px); } /* 5 o'clock */
-  .image-overlay[data-number="6"] { top: calc(50% + 150px); left: calc(50% + 0px); } /* 6 o'clock */
+  .image-overlay[data-number="6"] { top: calc(50% + 150px); left: 50%; } /* 6 o'clock */
   .image-overlay[data-number="7"] { top: calc(50% + 130px); left: calc(50% - 75px); } /* 7 o'clock */
   .image-overlay[data-number="8"] { top: calc(50% + 75px); left: calc(50% - 130px); } /* 8 o'clock */
-  .image-overlay[data-number="9"] { top: calc(50% + 0px); left: calc(50% - 150px); } /* 9 o'clock */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 150px); } /* 9 o'clock */
   .image-overlay[data-number="10"] { top: calc(50% - 75px); left: calc(50% - 130px); } /* 10 o'clock */
   .image-overlay[data-number="11"] { top: calc(50% - 130px); left: calc(50% - 75px); } /* 11 o'clock */
-  .image-overlay[data-number="12"] { top: calc(50% - 150px); left: calc(50% + 0px); } /* 12 o'clock */
+  .image-overlay[data-number="12"] { top: calc(50% - 150px); left: 50%; } /* 12 o'clock */
   
   /* Adjust additional images for mobile */
   .additional-image[data-additional-number="13"] { top: 10%; left: 15%; }
@@ -523,56 +479,3 @@ body {
 audio {
   display: none;
 }
-
-/* ===== PROGRESS BAR STYLING ===== */
-#progress-container {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  z-index: 10000; /* Higher than heartbeat glow */
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-#progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #ece29f 0%, #f47070 50%, #ff6b6b 100%);
-  border-radius: 4px;
-  width: 0%;
-  transition: width 0.3s ease;
-  box-shadow: 0 0 10px rgba(236, 226, 159, 0.5);
-}
-
-#progress-text {
-  position: absolute;
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #ece29f;
-  font-size: 0.9rem;
-  font-family: "allotropic", sans-serif;
-  font-weight: 300;
-  text-align: center;
-  opacity: 0.8;
-  white-space: nowrap;
-}
-
-/* Mobile responsive progress bar */
-@media (max-width: 768px) {
-  #progress-container {
-    width: 250px;
-    top: 15px;
-  }
-  
-  #progress-text {
-    font-size: 0.8rem;
-    top: -22px;
-  }
-}
-
-

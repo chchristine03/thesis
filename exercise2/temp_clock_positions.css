@@ -1,0 +1,15 @@
+/* ===== CORRECTED CIRCULAR POSITIONING FOR CLOCK IMAGES ===== */
+
+/* Desktop positioning - All 12 clock images positioned in perfect circle using trigonometry */
+.image-overlay[data-number="1"] { top: calc(50% - 173px); left: calc(50% + 100px); } /* 1 o'clock */
+.image-overlay[data-number="2"] { top: calc(50% - 100px); left: calc(50% + 173px); } /* 2 o'clock */
+.image-overlay[data-number="3"] { top: calc(50% + 0px); left: calc(50% + 200px); } /* 3 o'clock */
+.image-overlay[data-number="4"] { top: calc(50% + 100px); left: calc(50% + 173px); } /* 4 o'clock */
+.image-overlay[data-number="5"] { top: calc(50% + 173px); left: calc(50% + 100px); } /* 5 o'clock */
+.image-overlay[data-number="6"] { top: calc(50% + 200px); left: calc(50% + 0px); } /* 6 o'clock */
+.image-overlay[data-number="7"] { top: calc(50% + 173px); left: calc(50% - 100px); } /* 7 o'clock */
+.image-overlay[data-number="8"] { top: calc(50% + 100px); left: calc(50% - 173px); } /* 8 o'clock */
+.image-overlay[data-number="9"] { top: calc(50% + 0px); left: calc(50% - 200px); } /* 9 o'clock */
+.image-overlay[data-number="10"] { top: calc(50% - 100px); left: calc(50% - 173px); } /* 10 o'clock */
+.image-overlay[data-number="11"] { top: calc(50% - 173px); left: calc(50% - 100px); } /* 11 o'clock */
+.image-overlay[data-number="12"] { top: calc(50% - 200px); left: calc(50% + 0px); } /* 12 o'clock */

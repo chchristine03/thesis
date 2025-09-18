@@ -50,60 +50,22 @@ html, body {
   display: flex;
   flex-direction: column; /* Stack content vertically */
   align-items: center;
+  justify-content: flex-start; /* Start from top */
 }
 
-.intro-title{
-  font-size: 10rem;
-  font-weight: 300;
-  text-align: center;
-  z-index: 30;
-  color: #ece29f;
-  font-family: "helvetica-neue-lt-pro", sans-serif;
-}
 #intro-story {
-  background-color: black;
-  background-size: contain;
-  background-position: top;
-  background-repeat: no-repeat;
-  height: 700vh; /* Same height as other story sections */
-  width:100vw;
-  scroll-snap-align: start; /* Snap to start of section */
-}
-.gradient{
-  height: 100px; /* Adjust height as needed */
-  background-image: linear-gradient(to bottom, #a7000000 0%,#530f8a65 80%, #530f8acf 100%); /* Fades from black to transparent */
-  width: 100vw;
-  height: 30vh;
-  position: fixed;
-  bottom: 0;
-  z-index: 0;
-}
-
-.icon img{
-  width: 10%;
-  height: 10%;
-  object-fit: cover;
-  margin-bottom:3vh;
-}
-
-.bottom {
-  display:flex;
-  justify-content: center;
-  position:fixed;
-  bottom: 0;
+  background: #000; /* Pure black */
 }
 
 /* First story section - Completely black */
 #first-story {
   background: #000; /* Pure black */
   height: 1000vh; /* 12 viewport heights - requires 12 full scrolls to get through */
-  scroll-snap-align: start; /* Snap to start of section */
 }
 
 /* Second story section - Completely black */
 #second-story {
   background-image: linear-gradient(rgb(108, 0, 0),rgba(0, 0, 0, 0));
-  scroll-snap-align: start; /* Snap to start of section */
 }
 
 /* Title styling - Start in middle, then stick to top */
@@ -219,11 +181,6 @@ h2 {
 /* Smooth scrolling between sections */
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
-}
-
-body {
-  scroll-snap-type: y mandatory;
 }
 
 /* ===== CLOCK SECTION ===== */
@@ -236,21 +193,20 @@ body {
   position: relative;
   z-index: 5;
   overflow: visible; /* Allow scrolling */
-  scroll-snap-align: start; /* Snap to start of section */
 }
 
 .clock-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-  position: sticky; /* Make clock sticky within the section */
-  top: 0; /* Stick to top of viewport */
+  position: relative;
   height: 100vh; /* Fixed height for the clock itself */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 10; /* Ensure it stays above other elements */
+  position: sticky; /* Make clock sticky */
+  top: 0; /* Stick to top of viewport */
 }
 
 /* Canvas Clock - Simplified, no shadows or borders */
@@ -309,21 +265,15 @@ body {
   text-align: center;
 }
 
-/* ===== CLEAN CIRCULAR POSITIONING FOR CLOCK IMAGES ===== */
-
-/* Desktop positioning - All 12 clock images positioned in perfect circle using trigonometry */
-.image-overlay[data-number="1"] { top: calc(50% - 173px); left: calc(50% + 100px); } /* 1 o'clock */
-.image-overlay[data-number="2"] { top: calc(50% - 100px); left: calc(50% + 173px); } /* 2 o'clock */
-.image-overlay[data-number="3"] { top: calc(50% + 0px); left: calc(50% + 200px); } /* 3 o'clock */
-.image-overlay[data-number="4"] { top: calc(50% + 100px); left: calc(50% + 173px); } /* 4 o'clock */
-.image-overlay[data-number="5"] { top: calc(50% + 173px); left: calc(50% + 100px); } /* 5 o'clock */
-.image-overlay[data-number="6"] { top: calc(50% + 200px); left: calc(50% + 0px); } /* 6 o'clock */
-.image-overlay[data-number="7"] { top: calc(50% + 173px); left: calc(50% - 100px); } /* 7 o'clock */
-.image-overlay[data-number="8"] { top: calc(50% + 100px); left: calc(50% - 173px); } /* 8 o'clock */
-.image-overlay[data-number="9"] { top: calc(50% + 0px); left: calc(50% - 200px); } /* 9 o'clock */
-.image-overlay[data-number="10"] { top: calc(50% - 100px); left: calc(50% - 173px); } /* 10 o'clock */
-.image-overlay[data-number="11"] { top: calc(50% - 173px); left: calc(50% - 100px); } /* 11 o'clock */
-.image-overlay[data-number="12"] { top: calc(50% - 200px); left: calc(50% + 0px); } /* 12 o'clock */
+/* Position main images directly on top of numbers - MUCH MORE OVERLAPPED */
+.image-overlay[data-number="12"] { top: calc(50% - 229px); left: 50%; } /* 12 o'clock */
+.image-overlay[data-number="2"] { top: calc(50% - 99px); left: calc(50% + 198px); } /* 2 o'clock */
+.image-overlay[data-number="3"] { top: 50%; left: calc(50% + 229px); } /* 3 o'clock */
+.image-overlay[data-number="4"] { top: calc(50% + 99px); left: calc(50% + 198px); } /* 4 o'clock */
+.image-overlay[data-number="6"] { top: calc(50% + 229px); left: 50%; } /* 6 o'clock */
+.image-overlay[data-number="8"] { top: calc(50% + 99px); left: calc(50% - 198px); } /* 8 o'clock */
+.image-overlay[data-number="9"] { top: 50%; left: calc(50% - 229px); } /* 9 o'clock */
+.image-overlay[data-number="10"] { top: calc(50% - 99px); left: calc(50% - 198px); } /* 10 o'clock */
 
 /* Position additional images randomly across the entire page */
 .additional-image[data-additional-number="13"] { top: 15%; left: 20%; }
@@ -339,7 +289,7 @@ body {
 .additional-image[data-additional-number="23"] { top: 20%; left: 40%; }
 .additional-image[data-additional-number="24"] { top: 70%; left: 5%; }
 
-/* Mobile responsive positioning - smaller circle */
+/* Responsive Design */
 @media (max-width: 768px) {
   #clockCanvas {
     width: 400px;
@@ -347,34 +297,30 @@ body {
   }
   
   .image-overlay {
-    width: 80px;
-    height: 80px;
+    width: 100px; /* Smaller for mobile but still bigger than before */
+    height: 100px;
   }
   
   .additional-image {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
   }
   
   .image-placeholder {
     font-size: 0.8rem;
   }
   
-  /* Mobile positioning - smaller circle radius using trigonometry */
-  .image-overlay[data-number="1"] { top: calc(50% - 130px); left: calc(50% + 75px); } /* 1 o'clock */
-  .image-overlay[data-number="2"] { top: calc(50% - 75px); left: calc(50% + 130px); } /* 2 o'clock */
-  .image-overlay[data-number="3"] { top: calc(50% + 0px); left: calc(50% + 150px); } /* 3 o'clock */
-  .image-overlay[data-number="4"] { top: calc(50% + 75px); left: calc(50% + 130px); } /* 4 o'clock */
-  .image-overlay[data-number="5"] { top: calc(50% + 130px); left: calc(50% + 75px); } /* 5 o'clock */
-  .image-overlay[data-number="6"] { top: calc(50% + 150px); left: calc(50% + 0px); } /* 6 o'clock */
-  .image-overlay[data-number="7"] { top: calc(50% + 130px); left: calc(50% - 75px); } /* 7 o'clock */
-  .image-overlay[data-number="8"] { top: calc(50% + 75px); left: calc(50% - 130px); } /* 8 o'clock */
-  .image-overlay[data-number="9"] { top: calc(50% + 0px); left: calc(50% - 150px); } /* 9 o'clock */
-  .image-overlay[data-number="10"] { top: calc(50% - 75px); left: calc(50% - 130px); } /* 10 o'clock */
-  .image-overlay[data-number="11"] { top: calc(50% - 130px); left: calc(50% - 75px); } /* 11 o'clock */
-  .image-overlay[data-number="12"] { top: calc(50% - 150px); left: calc(50% + 0px); } /* 12 o'clock */
+  /* Adjust positions for smaller clock - MOVED 1, 5, 7, 11 MUCH MORE IN */
+  .image-overlay[data-number="12"] { top: calc(50% - 130px); left: 50%; } /* 12 o'clock */
+  .image-overlay[data-number="2"] { top: calc(50% - 65px); left: calc(50% + 130px); } /* 2 o'clock */
+  .image-overlay[data-number="3"] { top: 50%; left: calc(50% + 130px); } /* 3 o'clock */
+  .image-overlay[data-number="4"] { top: calc(50% + 65px); left: calc(50% + 130px); } /* 4 o'clock */
+  .image-overlay[data-number="6"] { top: calc(50% + 130px); left: 50%; } /* 6 o'clock */
+  .image-overlay[data-number="8"] { top: calc(50% + 65px); left: calc(50% - 130px); } /* 8 o'clock */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 130px); } /* 9 o'clock */
+  .image-overlay[data-number="10"] { top: calc(50% - 65px); left: calc(50% - 130px); } /* 10 o'clock */
   
-  /* Adjust additional images for mobile */
+  /* Adjust additional images for mobile - still random across page */
   .additional-image[data-additional-number="13"] { top: 10%; left: 15%; }
   .additional-image[data-additional-number="14"] { top: 20%; left: 85%; }
   .additional-image[data-additional-number="15"] { top: 35%; left: 5%; }
@@ -393,23 +339,23 @@ body {
 .clock-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+  object-fit: cover; /* Maintain aspect ratio and fill container */
+  border-radius: 50%; /* Perfect circle */
 }
 
 .additional-clock-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+  object-fit: cover; /* Maintain aspect ratio and fill container */
+  border-radius: 50%; /* Perfect circle */
 }
 
-/* Remove placeholder styling since we're using real images */
+/* Remove the old placeholder styling since we're using real images */
 .image-placeholder {
-  display: none;
+  display: none; /* Hide placeholder text since we have real images */
 }
 
-/* Additional images are hidden initially */
+/* Ensure additional images are completely hidden initially */
 .additional-image {
   opacity: 0 !important;
   display: none !important;
@@ -420,10 +366,16 @@ body {
   display: flex !important;
 }
 
-/* Scroll animation for images */
-.image-overlay {
-  opacity: 0;
-  transition: opacity 1s ease;
+
+/* Mobile adjustments to be directly on numbers */
+@media (max-width: 768px) {
+}
+
+.image-overlay[data-number="4"] { top: calc(50% + 99px); left: calc(50% + 198px); } /* 4 o'clock */
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .image-overlay[data-number="4"] { top: calc(50% + 65px); left: calc(50% + 130px); } /* 4 o'clock mobile */
 }
 
 .image-overlay.active {
@@ -431,6 +383,21 @@ body {
   display: flex !important;
 }
 
+
+/* Mobile adjustments - even more pronounced */
+@media (max-width: 768px) {
+}
+
+/* Ensure proper scroll animation - images start hidden */
+.image-overlay {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.image-overlay.active {
+  opacity: 1;
+}
+
 .additional-image {
   opacity: 0;
   transition: opacity 1s ease;
@@ -440,12 +407,31 @@ body {
   opacity: 1;
 }
 
-/* Smooth transitions for additional images */
+/* Mobile adjustments - images below numbers */
+@media (max-width: 768px) {
+  .image-overlay[data-number="12"] { top: calc(50% - 90px); left: 50%; } /* 12 o'clock mobile */
+  .image-overlay[data-number="2"] { top: calc(50% - 50px); left: calc(50% + 120px); } /* 2 o'clock mobile */
+  .image-overlay[data-number="3"] { top: 50%; left: calc(50% + 130px); } /* 3 o'clock mobile */
+  .image-overlay[data-number="4"] { top: calc(50% + 50px); left: calc(50% + 120px); } /* 4 o'clock mobile */
+  .image-overlay[data-number="6"] { top: calc(50% + 90px); left: 50%; } /* 6 o'clock mobile */
+  .image-overlay[data-number="8"] { top: calc(50% + 50px); left: calc(50% - 120px); } /* 8 o'clock mobile */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 130px); } /* 9 o'clock mobile */
+  .image-overlay[data-number="10"] { top: calc(50% - 50px); left: calc(50% - 120px); } /* 10 o'clock mobile */
+}
+
+/* Restore original positioning that was working well */
+.image-overlay[data-number="12"] { top: calc(50% - 229px); left: 50%; } /* 12 o'clock */
+.image-overlay[data-number="2"] { top: calc(50% - 99px); left: calc(50% + 198px); } /* 2 o'clock */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 130px); } /* 9 o'clock mobile */
+  .image-overlay[data-number="10"] { top: calc(50% - 65px); left: calc(50% - 130px); } /* 10 o'clock mobile */
+}
+
+/* Make additional images disappear more smoothly */
 .additional-image {
   opacity: 0;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 2s ease-in-out; /* Slower, smoother transition */
   transform: translate(-50%, -50%) scale(1);
-  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* Add scale transition */
 }
 
 .additional-image.active {
@@ -453,13 +439,63 @@ body {
   transform: translate(-50%, -50%) scale(1);
 }
 
+/* Add a fade-out effect when removing active class */
 .additional-image:not(.active) {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(1.1);
-  transition: opacity 2s ease-out, transform 2s ease-out;
+  transform: translate(-50%, -50%) scale(1.5); /* Slight scale down when fading out */
+  transition: opacity 2s ease-out, transform 2s ease-out; /* Longer fade-out */
 }
 
-/* Clock section title styling */
+/* Clock section title - centered without margin-top */
+
+/* Fix clock section title centering */
+
+/* Force clock section title to center with absolute positioning */
+
+/* Alternative centering approach for clock title */
+
+/* Clean clock section title centering */
+.clock-section .title {
+  position: sticky;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  z-index: 10;
+  color: #fff;
+  opacity: 0.9;
+  padding: 20px;
+  pointer-events: none;
+}
+
+/* Force center with flexbox approach */
+.clock-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.clock-section .title {
+  position: sticky;
+  top: 0;
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  z-index: 10;
+  color: #fff;
+  opacity: 0.9;
+  padding: 20px;
+  pointer-events: none;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Last resort - absolute positioning within clock section */
 .clock-section .title {
   position: sticky !important;
   top: 0 !important;
@@ -478,7 +514,7 @@ body {
   white-space: nowrap !important;
 }
 
-/* Music player button */
+/* Simple red music player button */
 .music-player {
   position: fixed;
   top: 20px;
@@ -519,60 +555,25 @@ body {
   background: #00cc00;
 }
 
-/* Hide default audio controls */
+/* Hide the default audio controls */
 audio {
   display: none;
 }
 
-/* ===== PROGRESS BAR STYLING ===== */
-#progress-container {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  z-index: 10000; /* Higher than heartbeat glow */
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-#progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #ece29f 0%, #f47070 50%, #ff6b6b 100%);
-  border-radius: 4px;
-  width: 0%;
-  transition: width 0.3s ease;
-  box-shadow: 0 0 10px rgba(236, 226, 159, 0.5);
-}
-
-#progress-text {
-  position: absolute;
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #ece29f;
-  font-size: 0.9rem;
-  font-family: "allotropic", sans-serif;
-  font-weight: 300;
-  text-align: center;
-  opacity: 0.8;
-  white-space: nowrap;
-}
-
-/* Mobile responsive progress bar */
+/* Clean circular positioning for clock images */
+/* Mobile responsive circular positioning */
 @media (max-width: 768px) {
-  #progress-container {
-    width: 250px;
-    top: 15px;
-  }
-  
-  #progress-text {
-    font-size: 0.8rem;
-    top: -22px;
-  }
+
+/* Clean circular positioning for clock images */
+.image-overlay[data-number="1"] { top: calc(50% - 198px); left: calc(50% + 99px); } /* 1 o'clock - more down and up */
+.image-overlay[data-number="5"] { top: calc(50% + 198px); left: calc(50% + 99px); } /* 5 o'clock - more up and right */
+.image-overlay[data-number="7"] { top: calc(50% + 198px); left: calc(50% - 99px); } /* 7 o'clock - more up and left */
+.image-overlay[data-number="11"] { top: calc(50% - 198px); left: calc(50% - 99px); } /* 11 o'clock - more down and left */
+
+/* Mobile responsive circular positioning */
+@media (max-width: 768px) {
+  .image-overlay[data-number="1"] { top: calc(50% - 130px); left: calc(50% + 65px); } /* 1 o'clock mobile */
+  .image-overlay[data-number="5"] { top: calc(50% + 130px); left: calc(50% + 65px); } /* 5 o'clock mobile */
+  .image-overlay[data-number="7"] { top: calc(50% + 130px); left: calc(50% - 65px); } /* 7 o'clock mobile */
+  .image-overlay[data-number="11"] { top: calc(50% - 130px); left: calc(50% - 65px); } /* 11 o'clock mobile */
 }
-
-

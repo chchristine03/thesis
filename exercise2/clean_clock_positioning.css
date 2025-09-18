@@ -1,0 +1,214 @@
+/* ===== CLEAN CIRCULAR POSITIONING FOR CLOCK IMAGES ===== */
+
+/* Desktop positioning - All 12 clock images positioned in perfect circle */
+.image-overlay[data-number="1"] { top: calc(50% - 198px); left: calc(50% + 114px); } /* 1 o'clock */
+.image-overlay[data-number="2"] { top: calc(50% - 114px); left: calc(50% + 198px); } /* 2 o'clock */
+.image-overlay[data-number="3"] { top: 50%; left: calc(50% + 229px); } /* 3 o'clock */
+.image-overlay[data-number="4"] { top: calc(50% + 114px); left: calc(50% + 198px); } /* 4 o'clock */
+.image-overlay[data-number="5"] { top: calc(50% + 198px); left: calc(50% + 114px); } /* 5 o'clock */
+.image-overlay[data-number="6"] { top: calc(50% + 229px); left: 50%; } /* 6 o'clock */
+.image-overlay[data-number="7"] { top: calc(50% + 198px); left: calc(50% - 114px); } /* 7 o'clock */
+.image-overlay[data-number="8"] { top: calc(50% + 114px); left: calc(50% - 198px); } /* 8 o'clock */
+.image-overlay[data-number="9"] { top: 50%; left: calc(50% - 229px); } /* 9 o'clock */
+.image-overlay[data-number="10"] { top: calc(50% - 114px); left: calc(50% - 198px); } /* 10 o'clock */
+.image-overlay[data-number="11"] { top: calc(50% - 198px); left: calc(50% - 114px); } /* 11 o'clock */
+.image-overlay[data-number="12"] { top: calc(50% - 229px); left: 50%; } /* 12 o'clock */
+
+/* Position additional images randomly across the entire page */
+.additional-image[data-additional-number="13"] { top: 15%; left: 20%; }
+.additional-image[data-additional-number="14"] { top: 25%; left: 80%; }
+.additional-image[data-additional-number="15"] { top: 40%; left: 10%; }
+.additional-image[data-additional-number="16"] { top: 60%; left: 90%; }
+.additional-image[data-additional-number="17"] { top: 75%; left: 15%; }
+.additional-image[data-additional-number="18"] { top: 85%; left: 85%; }
+.additional-image[data-additional-number="19"] { top: 10%; left: 50%; }
+.additional-image[data-additional-number="20"] { top: 35%; left: 70%; }
+.additional-image[data-additional-number="21"] { top: 55%; left: 30%; }
+.additional-image[data-additional-number="22"] { top: 80%; left: 60%; }
+.additional-image[data-additional-number="23"] { top: 20%; left: 40%; }
+.additional-image[data-additional-number="24"] { top: 70%; left: 5%; }
+
+/* Mobile responsive positioning - smaller circle */
+@media (max-width: 768px) {
+  #clockCanvas {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .image-overlay {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .additional-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .image-placeholder {
+    font-size: 0.8rem;
+  }
+  
+  /* Mobile positioning - smaller circle radius */
+  .image-overlay[data-number="1"] { top: calc(50% - 130px); left: calc(50% + 75px); } /* 1 o'clock */
+  .image-overlay[data-number="2"] { top: calc(50% - 75px); left: calc(50% + 130px); } /* 2 o'clock */
+  .image-overlay[data-number="3"] { top: 50%; left: calc(50% + 150px); } /* 3 o'clock */
+  .image-overlay[data-number="4"] { top: calc(50% + 75px); left: calc(50% + 130px); } /* 4 o'clock */
+  .image-overlay[data-number="5"] { top: calc(50% + 130px); left: calc(50% + 75px); } /* 5 o'clock */
+  .image-overlay[data-number="6"] { top: calc(50% + 150px); left: 50%; } /* 6 o'clock */
+  .image-overlay[data-number="7"] { top: calc(50% + 130px); left: calc(50% - 75px); } /* 7 o'clock */
+  .image-overlay[data-number="8"] { top: calc(50% + 75px); left: calc(50% - 130px); } /* 8 o'clock */
+  .image-overlay[data-number="9"] { top: 50%; left: calc(50% - 150px); } /* 9 o'clock */
+  .image-overlay[data-number="10"] { top: calc(50% - 75px); left: calc(50% - 130px); } /* 10 o'clock */
+  .image-overlay[data-number="11"] { top: calc(50% - 130px); left: calc(50% - 75px); } /* 11 o'clock */
+  .image-overlay[data-number="12"] { top: calc(50% - 150px); left: 50%; } /* 12 o'clock */
+  
+  /* Adjust additional images for mobile */
+  .additional-image[data-additional-number="13"] { top: 10%; left: 15%; }
+  .additional-image[data-additional-number="14"] { top: 20%; left: 85%; }
+  .additional-image[data-additional-number="15"] { top: 35%; left: 5%; }
+  .additional-image[data-additional-number="16"] { top: 55%; left: 95%; }
+  .additional-image[data-additional-number="17"] { top: 70%; left: 10%; }
+  .additional-image[data-additional-number="18"] { top: 80%; left: 80%; }
+  .additional-image[data-additional-number="19"] { top: 5%; left: 45%; }
+  .additional-image[data-additional-number="20"] { top: 30%; left: 65%; }
+  .additional-image[data-additional-number="21"] { top: 50%; left: 25%; }
+  .additional-image[data-additional-number="22"] { top: 75%; left: 55%; }
+  .additional-image[data-additional-number="23"] { top: 15%; left: 35%; }
+  .additional-image[data-additional-number="24"] { top: 65%; left: 2%; }
+}
+
+/* Image styling for clock images */
+.clock-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.additional-clock-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Remove placeholder styling since we're using real images */
+.image-placeholder {
+  display: none;
+}
+
+/* Additional images are hidden initially */
+.additional-image {
+  opacity: 0 !important;
+  display: none !important;
+}
+
+.additional-image.active {
+  opacity: 0.5 !important;
+  display: flex !important;
+}
+
+/* Scroll animation for images */
+.image-overlay {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.image-overlay.active {
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+.additional-image {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.additional-image.active {
+  opacity: 1;
+}
+
+/* Smooth transitions for additional images */
+.additional-image {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+}
+
+.additional-image.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.additional-image:not(.active) {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+/* Clock section title styling */
+.clock-section .title {
+  position: sticky !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-top: 0 !important;
+  font-size: 2rem !important;
+  font-weight: 300 !important;
+  text-align: center !important;
+  z-index: 10 !important;
+  color: #ece29f !important;
+  opacity: 0.9 !important;
+  padding: 20px !important;
+  pointer-events: none !important;
+  width: auto !important;
+  white-space: nowrap !important;
+}
+
+/* Music player button */
+.music-player {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.music-toggle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #ff0000;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.music-toggle-btn:hover {
+  background: #cc0000;
+  transform: scale(1.1);
+}
+
+.music-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.music-toggle-btn.playing {
+  background: #00ff00;
+}
+
+.music-toggle-btn.playing:hover {
+  background: #00cc00;
+}
+
+/* Hide default audio controls */
+audio {
+  display: none;
+}
