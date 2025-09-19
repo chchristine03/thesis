@@ -842,3 +842,54 @@ updateProgressBar();
 
 // Add scroll event listener for progress bar updates
 window.addEventListener('scroll', updateProgressBar, { passive: true });
+
+// Add this function to hide/show loading gifs based on dominant section
+function updateLoadingGifs() {
+  const introStory = document.getElementById("intro-story");
+  const firstStory = document.getElementById("first-story");
+  const clockStory = document.getElementById("clock-story");
+  const secondStory = document.getElementById("second-story");
+  
+  // Get all loading gif elements
+  const loadingGifs = document.querySelectorAll('.icon.bottom img[src*="circle loading.gif"]');
+  
+  console.log('Found loading gifs:', loadingGifs.length);
+  
+  // Check which section is dominant
+  let dominantSection = null;
+  
+  // Check second-story visibility
+  if (secondStory) {
+    const rect = secondStory.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+    const visibilityPercentage = (visibleHeight / viewportHeight) * 100;
+    
+    console.log('Second story visibility:', visibilityPercentage + '%');
+    
+    if (visibilityPercentage >= 50) {
+      dominantSection = 'second-story';
+    }
+  }
+  
+  console.log('Dominant section:', dominantSection);
+  
+  // Show/hide loading gifs based on dominant section
+  loadingGifs.forEach((gif, index) => {
+    if (dominantSection === 'second-story') {
+      // Hide loading gifs when second-story is dominant
+      gif.style.display = 'none';
+      console.log(`Hiding gif ${index}`);
+    } else {
+      // Show loading gifs in all other cases (intro, first-story, clock-story)
+      gif.style.display = 'block';
+      console.log(`Showing gif ${index}`);
+    }
+  });
+}
+
+// Call this function on scroll
+window.addEventListener('scroll', updateLoadingGifs, { passive: true });
+
+// Call it initially
+updateLoadingGifs();

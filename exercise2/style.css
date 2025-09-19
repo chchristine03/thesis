@@ -59,6 +59,8 @@ html, body {
   z-index: 30;
   color: #ece29f;
   font-family: "helvetica-neue-lt-pro", sans-serif;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide any overflow */
 }
 #intro-story {
   background-color: black;
@@ -91,6 +93,13 @@ html, body {
   justify-content: center;
   position:fixed;
   bottom: 0;
+}
+
+/* Show loading gifs in other sections */
+#intro-story .icon.bottom,
+#first-story .icon.bottom,
+#clock-story .icon.bottom {
+  display: flex;
 }
 
 /* First story section - Completely black */
@@ -710,7 +719,7 @@ audio {
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
-  font-size: 4rem !important;
+  font-size: 10vw !important;
   font-weight: 300 !important;
   text-align: center !important;
   z-index: 30 !important;
