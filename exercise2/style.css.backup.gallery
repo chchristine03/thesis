@@ -55,7 +55,7 @@ html, body {
   font-size: 2rem;
   font-weight: 300;
   text-align: center;
-  z-index: 1000;
+  z-index: 30;
   color: #7512c7;
   text-shadow: 0 0 20px rgba(170, 119, 211, 0.998);; /* Horizontal, Vertical, Blur, Color */
   font-family: "helvetica-neue-lt-pro", sans-serif;
@@ -73,7 +73,7 @@ html, body {
   transform: translateX(-50%);
   font-size: 2rem;
   font-weight: 300;
-  z-index: 1000;
+  z-index: 30;
   color: #7512c792;
   font-family: "helvetica-neue-lt-pro", sans-serif;
 }
@@ -81,7 +81,7 @@ html, body {
   font-size: 10rem;
   font-weight: 300;
   text-align: center;
-  z-index: 1000;
+  z-index: 30;
   color: #ece29f;
   font-family: "helvetica-neue-lt-pro", sans-serif;
   white-space: nowrap; /* Prevent text wrapping */
@@ -149,7 +149,7 @@ html, body {
   font-size: 2.5rem;
   font-weight: 300;
   text-align: center;
-  z-index: 1000; /* Higher than sections but lower than glow */
+  z-index: 30; /* Higher than sections but lower than glow */
   color: #ece29f;
   opacity: 0.9;
   margin: 0;
@@ -171,7 +171,7 @@ html, body {
   font-size: 2.5rem;
   font-weight: 300;
   text-align: center;
-  z-index: 1000; /* Higher than sections but lower than glow */
+  z-index: 30; /* Higher than sections but lower than glow */
   color: #f47070;
   opacity: 0.5;
   margin: 0;
@@ -195,7 +195,7 @@ html, body {
   font-size: 2rem;
   font-weight: 300;
   text-align: center;
-  z-index: 1000; /* Higher than sections but lower than glow */
+  z-index: 30; /* Higher than sections but lower than glow */
   color: #000000;
   opacity: 0.9;
   margin: 0;
@@ -1055,43 +1055,4 @@ audio {
 .category-description {
   text-align: center;
   padding: 20px 30px; /* Reduce padding */
-}
-
-/* Gallery Button Styles */
-.gallery-button-container {
-    position: sticky;
-    top: 20vh;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    z-index: 1000;
-    margin-top: 20vh;
-    pointer-events: auto;
-}
-
-.gallery-button {
-    display: inline-block;
-    padding: 15px 30px;
-    background: transparent;
-    border: 2px solid #ece29f;
-    color: #ece29f;
-    text-decoration: none;
-    font-family: "helvetica-neue-lt-pro", sans-serif;
-    font-weight: 300;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.gallery-button:hover {
-    background: #ece29f;
-    color: #000;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(236, 226, 159, 0.3);
-}
-
-.gallery-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(236, 226, 159, 0.2);
 }

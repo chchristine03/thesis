@@ -15,6 +15,7 @@
     <div class="gallery-container">
         <header class="gallery-header">
             <h1>Image Gallery</h1>
+            <p class="gallery-description">Collection of images from the 256 folder</p>
             <div class="gallery-controls">
                 <select id="categoryFilter" class="category-filter">
                     <option value="">All Categories</option>

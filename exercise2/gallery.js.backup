@@ -45,10 +45,10 @@ class Gallery {
         
         // Add category descriptions
         const categoryDescriptions = {
-            'control': 'Control',
-            'fun': 'Fun',
-            'materialism': 'Materialism',
-            'reputation': 'Reputation'
+            'control': 'Control - Power, Authority, Structure',
+            'fun': 'Fun - Joy, Playfulness, Entertainment',
+            'materialism': 'Materialism - Products, Possessions, Consumption',
+            'reputation': 'Reputation - Social Status, Identity, Perception'
         };
         
         categories.forEach(category => {
