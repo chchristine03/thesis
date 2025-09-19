@@ -12,7 +12,6 @@
     <script src="cursor_trail.js"></script>
     <script defer src="reset-selection.js"></script>
     <script defer src="category-based-images.js"></script>
-    <script defer src="category-descriptions.js"></script>
 </head>
 <body class="has-pulse">
 <!-- Heartbeat glow overlay -->
@@ -141,11 +140,6 @@
 <section id="second-story" class="story-section">
         <div class="bottom-title" id="category-title">
             must be a morning
-        </div>
-        
-        <!-- Category Description Container -->
-        <div id="category-description-container" class="category-description-wrapper">
-            <!-- Category descriptions will be dynamically inserted here -->
         </div>
 </section>
 

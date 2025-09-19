@@ -757,3 +757,302 @@ audio {
   border-radius: 50% !important;
   display: block !important;
 }
+
+/* ===== CATEGORY DESCRIPTIONS STYLING ===== */
+.category-description-wrapper {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  z-index: 10;
+  padding: 0 20px;
+}
+
+.category-description {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.category-title {
+  font-family: "helvetica-neue-lt-pro", sans-serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: #ece29f;
+  margin: 0 0 20px 0;
+  text-shadow: 0 0 15px rgba(236, 226, 159, 0.6);
+  letter-spacing: 2px;
+}
+
+.category-text {
+  font-family: "helvetica-neue-lt-pro", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile responsive styling for category descriptions */
+@media (max-width: 768px) {
+  .category-description-wrapper {
+    width: 95%;
+    bottom: 15%;
+  }
+  
+  .category-description {
+    padding: 30px 25px;
+  }
+  
+  .category-title {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .category-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-description-wrapper {
+    width: 95%;
+    bottom: 10%;
+  }
+  
+  .category-description {
+    padding: 25px 20px;
+    border-radius: 15px;
+  }
+  
+  .category-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+  }
+  
+  .category-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+/* Fade-in animation for category descriptions */
+.category-description {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced styling for poetry format category descriptions */
+.category-text {
+  white-space: pre-line; /* Preserve line breaks */
+  font-style: italic;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile adjustments for poetry format */
+@media (max-width: 768px) {
+  .category-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+  }
+}
+
+/* Updated category descriptions - high z-index and bold Helvetica */
+.category-description-wrapper {
+  z-index: 10000 !important; /* Highest z-index */
+}
+
+.category-description {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 2px solid rgba(236, 226, 159, 0.3) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+.category-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: 700 !important; /* Bold */
+  font-size: 3.5rem !important;
+  color: #ece29f !important;
+  text-shadow: 0 0 20px rgba(236, 226, 159, 0.8) !important;
+  letter-spacing: 3px !important;
+}
+
+.category-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: 600 !important; /* Bold */
+  font-size: 1.4rem !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7) !important;
+  letter-spacing: 1px !important;
+}
+
+/* Hide the original category title */
+#category-title {
+  display: none !important;
+}
+
+/* Mobile responsive updates */
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 3rem !important;
+    letter-spacing: 2px !important;
+  }
+  
+  .category-text {
+    font-size: 1.2rem !important;
+    letter-spacing: 0.8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-title {
+    font-size: 2.5rem !important;
+    letter-spacing: 1.5px !important;
+  }
+  
+  .category-text {
+    font-size: 1.1rem !important;
+    letter-spacing: 0.5px !important;
+  }
+}
+
+/* Updated category descriptions - glass white background, tighter line height */
+.category-description {
+  background: rgba(255, 255, 255, 0.9) !important; /* Opaque white glass */
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+.category-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: 700 !important; /* Keep title bold */
+  font-size: 3.5rem !important;
+  color: #000000 !important; /* Black text on white background */
+  text-shadow: none !important;
+  letter-spacing: 3px !important;
+}
+
+.category-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: 400 !important; /* Not bold */
+  font-size: 1.4rem !important;
+  color: #000000 !important; /* Black text on white background */
+  text-shadow: none !important;
+  letter-spacing: 1px !important;
+  line-height: 1.3 !important; /* Tighter line height */
+}
+
+/* Mobile responsive updates */
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 3rem !important;
+    letter-spacing: 2px !important;
+  }
+  
+  .category-text {
+    font-size: 1.2rem !important;
+    letter-spacing: 0.8px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-title {
+    font-size: 2.5rem !important;
+    letter-spacing: 1.5px !important;
+  }
+  
+  .category-text {
+    font-size: 1.1rem !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* More translucent white glass background */
+.category-description {
+  background: rgba(255, 255, 255, 0.6) !important; /* More translucent */
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* More transparent glass-like background */
+.category-description {
+  background: rgba(255, 255, 255, 0.25) !important; /* Much more transparent */
+  backdrop-filter: blur(30px) !important; /* Stronger blur for glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Change text color to warm yellow like other page elements */
+.category-title {
+  color: #ece29f !important; /* Warm yellow like progress bar */
+}
+
+.category-text {
+  color: #ece29f !important; /* Warm yellow like progress bar */
+}
+
+/* Remove background rectangle - make transparent */
+.category-description {
+  background: transparent !important; /* No background */
+  backdrop-filter: none !important; /* No blur */
+  border: none !important; /* No border */
+  box-shadow: none !important; /* No shadow */
+}
+
+/* Make description more transparent than category title */
+.category-title {
+  opacity: 1 !important; /* Full opacity for title */
+}
+
+.category-text {
+  opacity: 0.7 !important; /* More transparent than title */
+}
+
+/* Move text higher up and center better */
+.category-description-wrapper {
+  position: absolute;
+  top: 30% !important; /* Move higher up */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  z-index: 10000 !important;
+  padding: 0 20px;
+}
+
+.category-description {
+  text-align: center;
+  padding: 20px 30px; /* Reduce padding */
+}
