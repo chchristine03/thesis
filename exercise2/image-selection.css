@@ -32,7 +32,7 @@ body {
 .selection-header {
     color: #a061d2;
     font-family: "helvetica-neue-lt-pro", sans-serif;
-    font-size: 7rem;
+    font-size: 5rem;
     font-weight: 300;
     text-shadow: 0 0 20px rgba(25, 6, 37, 0.998);; /* Horizontal, Vertical, Blur, Color */
 }
@@ -75,7 +75,7 @@ body {
     margin: 10px auto;
     text-align: center;
     display: block;
-    margin-right: 9vw;
+    margin-right: 5vw;
 }
 
 .shuffle-btn:hover {
