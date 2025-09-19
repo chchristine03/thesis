@@ -51,7 +51,21 @@ html, body {
   flex-direction: column; /* Stack content vertically */
   align-items: center;
 }
-
+.intro-subtitle{
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  z-index: 30;
+  color: #6a408ccf;
+  text-shadow: 0 0 20px rgba(170, 119, 211, 0.998);; /* Horizontal, Vertical, Blur, Color */
+  font-family: "helvetica-neue-lt-pro", sans-serif;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide any overflow */
+  position: absolute;
+  bottom: 39.5vh;
+  left: 45%;
+  transform: translateX(-50%);
+}
 .intro-title{
   font-size: 10rem;
   font-weight: 300;
@@ -486,48 +500,6 @@ body {
   width: auto !important;
   white-space: nowrap !important;
 }
-
-/* Music player button */
-.music-player {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
-.music-toggle-btn {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #ff0000;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: white;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.music-toggle-btn:hover {
-  background: #cc0000;
-  transform: scale(1.1);
-}
-
-.music-toggle-btn:active {
-  transform: scale(0.95);
-}
-
-.music-toggle-btn.playing {
-  background: #00ff00;
-}
-
-.music-toggle-btn.playing:hover {
-  background: #00cc00;
-}
-
 /* Hide default audio controls */
 audio {
   display: none;
@@ -719,9 +691,9 @@ audio {
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
-  font-size: 10vw !important;
+  font-size: 13vw !important;
   font-weight: 300 !important;
-  text-align: center !important;
+  text-align: left !important;
   z-index: 30 !important;
   color: #ece29f !important;
   opacity: 0.9 !important;
@@ -732,6 +704,7 @@ audio {
   font-style: normal !important;
   pointer-events: none !important;
   text-shadow: 0 0 20px rgba(236, 226, 159, 0.5) !important;
+  line-height: 0.9
 }
 
 /* Ensure other sections work properly */
