@@ -56,7 +56,7 @@ html, body {
   font-weight: 300;
   text-align: center;
   z-index: 30;
-  color: #6a408ccf;
+  color: #7512c7;
   text-shadow: 0 0 20px rgba(170, 119, 211, 0.998);; /* Horizontal, Vertical, Blur, Color */
   font-family: "helvetica-neue-lt-pro", sans-serif;
   white-space: nowrap; /* Prevent text wrapping */
@@ -65,6 +65,17 @@ html, body {
   bottom: 39.5vh;
   left: 45%;
   transform: translateX(-50%);
+}
+.name-subtitle{
+  position: absolute;
+  bottom: 39.5vh;
+  left: 67%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: 300;
+  z-index: 30;
+  color: #7512c792;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
 }
 .intro-title{
   font-size: 10rem;
