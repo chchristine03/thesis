@@ -545,14 +545,14 @@ function updateClockImagesSmoothExit() {
   }
 }
 
-// Progress Bar Functionality
+// Horizontal Progress Bar with Checkpoints
 function updateProgressBar() {
   const y = window.scrollY || 0;
   const windowHeight = window.innerHeight;
-  const progressBar = document.getElementById("progress-bar");
+  const progressFill = document.getElementById("progress-fill");
   const progressText = document.getElementById("progress-text");
   
-  if (!progressBar || !progressText) return;
+  if (!progressFill || !progressText) return;
   
   // Get all sections
   const introStory = document.getElementById("intro-story");
@@ -560,69 +560,107 @@ function updateProgressBar() {
   const clockStory = document.getElementById("clock-story");
   const secondStory = document.getElementById("second-story");
   
-  // Define section information
-  const sections = [
-    { element: introStory, name: "Intro Story", height: 700 },
-    { element: firstStory, name: "Heartbeat", height: 1000 },
-    { element: clockStory, name: "Clock", height: 2400 },
-    { element: secondStory, name: "Final", height: 100 }
+  // Define checkpoint sections with your specific names
+  const checkpoints = [
+    { element: introStory, name: "RUN", height: 700, position: 0 },
+    { element: firstStory, name: "GROW", height: 1000, position: 1 },
+    { element: clockStory, name: "ALARM", height: 2400, position: 2 },
+    { element: secondStory, name: "MORNING", height: 100, position: 3 }
   ];
   
-  // Calculate total page height
-  let totalPageHeight = 0;
-  let sectionPositions = [];
+  // Calculate checkpoint positions
+  let checkpointPositions = [];
+  let currentY = 0;
   
-  for (let i = 0; i < sections.length; i++) {
-    const section = sections[i];
-    if (!section.element) continue;
+  for (let i = 0; i < checkpoints.length; i++) {
+    const checkpoint = checkpoints[i];
+    if (!checkpoint.element) continue;
     
-    const sectionTop = section.element.offsetTop;
-    const sectionHeight = windowHeight * (section.height / 100); // Convert vh to pixels
-    
-    sectionPositions.push({
-      ...section,
-      top: sectionTop,
-      height: sectionHeight,
-      bottom: sectionTop + sectionHeight
+    const sectionHeight = windowHeight * (checkpoint.height / 100);
+    checkpointPositions.push({
+      ...checkpoint,
+      startY: currentY,
+      endY: currentY + sectionHeight,
+      centerY: currentY + (sectionHeight / 2)
     });
     
-    totalPageHeight += sectionHeight;
+    currentY += sectionHeight;
   }
   
-  // Calculate overall progress (0 to 1)
-  const overallProgress = Math.min(1, Math.max(0, y / totalPageHeight));
+  // Find current checkpoint and progress within it
+  let currentCheckpoint = null;
+  let progressToNext = 0;
+  let checkpointIndex = -1;
   
-  // Find which section we are currently in
-  let currentSection = null;
-  for (let i = 0; i < sectionPositions.length; i++) {
-    const section = sectionPositions[i];
-    if (y >= section.top && y < section.bottom) {
-      currentSection = section;
+  for (let i = 0; i < checkpointPositions.length; i++) {
+    const checkpoint = checkpointPositions[i];
+    if (y >= checkpoint.startY && y < checkpoint.endY) {
+      currentCheckpoint = checkpoint;
+      checkpointIndex = i;
+      
+      // Calculate progress within current checkpoint (0 to 1)
+      const checkpointProgress = (y - checkpoint.startY) / (checkpoint.endY - checkpoint.startY);
+      progressToNext = checkpointProgress;
       break;
     }
   }
   
-  // Update progress bar and text
-  if (currentSection) {
-    progressBar.style.width = (overallProgress * 100) + "%";
-    progressText.textContent = currentSection.name;
+  // Update progress bar
+  if (currentCheckpoint) {
+    // Calculate overall progress including completed checkpoints
+    const completedProgress = checkpointIndex / (checkpoints.length - 1);
+    const currentProgress = progressToNext / (checkpoints.length - 1);
+    const totalProgress = completedProgress + currentProgress;
     
-    // Add visual feedback for different progress levels across entire page
-    if (overallProgress < 0.25) {
-      progressBar.style.background = "linear-gradient(90deg, #ece29f 0%, #f47070 50%, #ff6b6b 100%)";
-    } else if (overallProgress < 0.5) {
-      progressBar.style.background = "linear-gradient(90deg, #f47070 0%, #ff6b6b 50%, #ff4444 100%)";
-    } else if (overallProgress < 0.75) {
-      progressBar.style.background = "linear-gradient(90deg, #ff6b6b 0%, #ff4444 50%, #cc0000 100%)";
-    } else {
-      progressBar.style.background = "linear-gradient(90deg, #ff4444 0%, #cc0000 50%, #990000 100%)";
-    }
+    // Update progress fill
+    progressFill.style.width = (totalProgress * 100) + "%";
+    
+    // Update text with current checkpoint name
+    progressText.textContent = currentCheckpoint.name;
+    
+    // Update checkpoint visual states
+    updateCheckpointStates(checkpointIndex, checkpointPositions.length);
+    
+    // Color progression based on checkpoint
+    const colors = [
+      "linear-gradient(90deg, #ece29f 0%, #f47070 50%, #ff6b6b 100%)",
+      "linear-gradient(90deg, #f47070 0%, #ff6b6b 50%, #ff4444 100%)",
+      "linear-gradient(90deg, #ff6b6b 0%, #ff4444 50%, #cc0000 100%)",
+      "linear-gradient(90deg, #ff4444 0%, #cc0000 50%, #990000 100%)"
+    ];
+    
+    progressFill.style.background = colors[checkpointIndex] || colors[0];
   } else {
-    // If not in any section, hide progress bar
-    progressBar.style.width = "0%";
+    // If not in any section, reset progress bar
+    progressFill.style.width = "0%";
     progressText.textContent = "";
+  }
+}
+
+// Update checkpoint circle states
+function updateCheckpointStates(currentIndex, totalCheckpoints) {
+  // Remove existing checkpoints
+  const existingCheckpoints = document.querySelectorAll('.checkpoint');
+  existingCheckpoints.forEach(cp => cp.remove());
+  
+  // Create checkpoint circles
+  for (let i = 0; i < totalCheckpoints; i++) {
+    const checkpoint = document.createElement('div');
+    checkpoint.className = 'checkpoint';
+    
+    // Set checkpoint states
+    if (i < currentIndex) {
+      checkpoint.classList.add('completed');
+    } else if (i === currentIndex) {
+      checkpoint.classList.add('active');
+    }
+    
+    document.getElementById('progress-container').appendChild(checkpoint);
   }
 }
 
 // Initial progress bar update
 updateProgressBar();
+
+// Add scroll event listener for progress bar updates
+window.addEventListener('scroll', updateProgressBar, { passive: true });
