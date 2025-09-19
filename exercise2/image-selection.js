@@ -8,10 +8,11 @@ class ImageSelection {
         this.galleryData = null;
         this.selectedImage = null;
         this.selectionImages = [];
+        this.isImageSelected = false; // Track if image is visually selected
         
         // DOM elements
         this.selectionGrid = document.getElementById('selectionGrid');
-        this.shuffleBtn = document.getElementById('shuffleBtn');
+        this.shuffleBtn = document.getElementById('shuffleImages');
         
         this.init();
     }
@@ -112,12 +113,17 @@ class ImageSelection {
     }
 
     setupEventListeners() {
-        // Grid click handler - clicking anywhere on an image selects it
+        // Grid click handler - separate handlers for image and circle
         this.selectionGrid.addEventListener('click', (e) => {
             const item = e.target.closest('.selection-item');
+            const circle = e.target.closest('.selection-circle');
             
-            if (item) {
-                // Clicked on the image - select it
+            if (circle) {
+                // Clicked specifically on the white circle - proceed to selection
+                e.stopPropagation(); // Prevent event from bubbling to image
+                this.finalizeSelection();
+            } else if (item) {
+                // Clicked on the image (but not the circle) - just select visually
                 this.selectImage(item);
             }
         });
@@ -139,13 +145,9 @@ class ImageSelection {
         
         const imageIndex = parseInt(item.dataset.imageIndex);
         this.selectedImage = this.selectionImages[imageIndex];
+        this.isImageSelected = true;
         
-        console.log('Selected image:', this.selectedImage);
-        
-        // Auto-redirect after a short delay
-        setTimeout(() => {
-            this.finalizeSelection();
-        }, 500);
+        console.log('Image selected visually:', this.selectedImage);
     }
 
     shuffleImages() {
@@ -155,10 +157,13 @@ class ImageSelection {
         
         // Reset selection
         this.selectedImage = null;
+        this.isImageSelected = false;
     }
 
     finalizeSelection() {
-        if (!this.selectedImage) {
+        // No alert popup - just proceed if there's a selected image
+        if (!this.selectedImage || !this.isImageSelected) {
+            console.warn('No image selected, cannot finalize.');
             return;
         }
         

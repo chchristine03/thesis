@@ -626,4 +626,3 @@ function updateProgressBar() {
 
 // Initial progress bar update
 updateProgressBar();
-

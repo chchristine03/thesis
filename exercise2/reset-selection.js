@@ -6,7 +6,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Check if we're on the main website (not selection page)
     const mainWebsite = document.getElementById('main-website');
-    if (mainWebsite && mainWebsite.style.display !== 'none') {
+    const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname === '/';
+    
+    if ((mainWebsite && mainWebsite.style.display !== 'none') || isIndexPage) {
         addResetButton();
     }
 });

@@ -12,14 +12,14 @@ html, body {
 }
 
 body {
-    font-family: 'futura-pt', sans-serif;
-    background: linear-gradient(to bottom, #000000 70%, #764ba2 100%);
+    font-family: 'helvetica-neue-lt-pro', sans-serif;
+    background-color: #000000;
     background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-#image-selection-container {
+#selection-container {
     min-height: 100vh;
     width: 100vw;
     display: flex;
@@ -36,6 +36,7 @@ body {
 }
 
 .selection-header h1 {
+    font-family: "helvetica-neue-lt-pro", sans-serif;
     font-size: 2.5rem;
     margin-bottom: 10px;
     font-weight: 300;
@@ -94,6 +95,7 @@ body {
 
 .selection-item:hover img {
     transform: scale(1.1);
+    filter: brightness(0.3) hue-rotate(280deg) saturate(1.2);
 }
 
 .selection-overlay {
@@ -112,6 +114,7 @@ body {
 
 .selection-item:hover .selection-overlay {
     opacity: 1;
+    background: linear-gradient(45deg, rgba(102, 51, 153, 0.4), rgba(75, 0, 130, 0.3));
 }
 
 .selection-item.selected .selection-overlay {
@@ -196,7 +199,7 @@ body {
         font-size: 1.8rem;
     }
     
-    #image-selection-container {
+    #selection-container {
         padding: 15px;
     }
 }
