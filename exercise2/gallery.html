@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link href="reset.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link href="gallery.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/vfm1hlz.css">
+    <script defer src="scripts.js"></script>
+    <script defer src="gallery.js"></script>
+</head>
+<body class="has-pulse">
+    <div class="gallery-container">
+        <header class="gallery-header">
+            <h1>Image Gallery</h1>
+            <p class="gallery-description">Collection of images from the 256 folder</p>
+            <div class="gallery-controls">
+                <select id="categoryFilter" class="category-filter">
+                    <option value="">All Categories</option>
+                </select>
+                <div class="gallery-stats">
+                    <span id="imageCount">0 images</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Images will be loaded here by JavaScript -->
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading images...</p>
+        </div>
+    </div>
+</body>
+</html>

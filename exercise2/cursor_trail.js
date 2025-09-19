@@ -1,9 +1,9 @@
-
-// Simple Cursor Trail System
+// Enhanced Cursor Trail System with Category Support
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Simple Cursor Trail: Starting...');
+  console.log('Enhanced Cursor Trail: Starting...');
   
-  const imagePaths = [
+  // Default image paths (fallback)
+  const defaultImagePaths = [
     'images/gif/collection-slow.gif',
     'images/gif/numbers.gif', 
     'images/gif/bagslow.gif',
@@ -27,25 +27,45 @@ document.addEventListener('DOMContentLoaded', () => {
     'images/clock photos/12.jpg'
   ];
   
+  let currentImagePaths = [...defaultImagePaths];
   let isInIntro = false;
   let lastMouseTime = 0;
+  
+  // Cursor Trail Object
+  window.cursorTrail = {
+    updateImages: function(categoryImages) {
+      if (categoryImages && categoryImages.length > 0) {
+        currentImagePaths = categoryImages.map(img => img.path);
+        console.log('Cursor Trail: Updated with', currentImagePaths.length, 'category images');
+      } else {
+        currentImagePaths = [...defaultImagePaths];
+        console.log('Cursor Trail: Using default images');
+      }
+    },
+    
+    getCurrentImages: function() {
+      return currentImagePaths;
+    }
+  };
   
   // Check if we're in intro section
   function checkSection() {
     const introSection = document.getElementById('intro-story');
     if (!introSection) {
-      console.log('Simple Cursor Trail: intro-story not found');
+      console.log('Enhanced Cursor Trail: intro-story not found');
       return;
     }
     
     const rect = introSection.getBoundingClientRect();
     isInIntro = rect.top <= 0 && rect.bottom >= window.innerHeight;
-    console.log('Simple Cursor Trail: isInIntro =', isInIntro);
+    console.log('Enhanced Cursor Trail: isInIntro =', isInIntro);
   }
   
   // Add trail image
   function addTrailImage(x, y) {
-    console.log('Simple Cursor Trail: Adding image at', x, y);
+    if (currentImagePaths.length === 0) return;
+    
+    console.log('Enhanced Cursor Trail: Adding image at', x, y);
     
     const trailDiv = document.createElement('div');
     trailDiv.style.position = 'fixed';
@@ -59,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     trailDiv.style.opacity = '0.8';
     
     const img = document.createElement('img');
-    const randomPath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+    const randomPath = currentImagePaths[Math.floor(Math.random() * currentImagePaths.length)];
     img.src = randomPath;
     img.style.width = '100%';
     img.style.height = '100%';
@@ -69,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     trailDiv.appendChild(img);
     document.body.appendChild(trailDiv);
     
-    console.log('Simple Cursor Trail: Image added:', randomPath);
+    console.log('Enhanced Cursor Trail: Image added:', randomPath);
     
     // Remove after 3 seconds
     setTimeout(() => {
@@ -90,6 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
     addTrailImage(e.clientX, e.clientY);
   }
   
+  // Listen for category selection
+  window.addEventListener('categorySelected', (event) => {
+    console.log('Cursor Trail: Category selected:', event.detail.category);
+    // The category filter will call updateImages when ready
+  });
+  
   // Event listeners
   window.addEventListener('scroll', checkSection);
   document.addEventListener('mousemove', handleMouseMove);
@@ -97,6 +123,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial check
   checkSection();
   
-  console.log('Simple Cursor Trail: Ready with', imagePaths.length, 'images');
+  console.log('Enhanced Cursor Trail: Ready with', currentImagePaths.length, 'images');
 });
-

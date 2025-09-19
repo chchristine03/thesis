@@ -1,0 +1,225 @@
+/* Selection Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'futura-pt', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#selection-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.selection-header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.selection-header h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-weight: 300;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.selection-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.selection-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.selection-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.selection-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.selection-item:hover img {
+    transform: scale(1.1);
+}
+
+.selection-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.selection-item:hover .selection-overlay {
+    opacity: 1;
+}
+
+.selection-item.selected .selection-overlay {
+    opacity: 1;
+    background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+}
+
+.selection-item.selected img {
+    filter: brightness(0.4);
+}
+
+.selection-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Only show circle when selected - no hover effect */
+.selection-item.selected .selection-circle {
+    opacity: 1;
+    transform: scale(1);
+    background: rgba(255,255,255,1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.selection-item.selected .selection-circle:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+.selection-circle span {
+    color: #333;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.selection-controls {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.shuffle-btn {
+    padding: 15px 25px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.shuffle-btn:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+}
+
+/* Loading state */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .selection-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 15px;
+    }
+    
+    .selection-header h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .selection-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        gap: 12px;
+    }
+    
+    .selection-header h1 {
+        font-size: 2rem;
+    }
+    
+    .selection-header p {
+        font-size: 1rem;
+    }
+    
+    .selection-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .selection-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(12, 1fr);
+        gap: 10px;
+    }
+    
+    .selection-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    #selection-container {
+        padding: 15px;
+    }
+}
