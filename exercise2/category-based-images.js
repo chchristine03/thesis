@@ -129,3 +129,7 @@ class CategoryBasedImages {
 document.addEventListener('DOMContentLoaded', () => {
     window.categoryBasedImages = new CategoryBasedImages();
 });
+
+// Add debugging
+console.log('Category-based-images.js loaded');
+console.log('localStorage selectedCategory:', localStorage.getItem('selectedCategory'));
