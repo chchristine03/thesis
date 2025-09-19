@@ -1,3 +1,6 @@
+// Define checkpoint sections globally
+const checkpointNames = ["RUN", "GROW", "ALARM", "MORNING"];
+
 (function(){
   console.log('Script starting...');
   
@@ -102,7 +105,7 @@
       const heartbeatCycles = 3;
       const cycleProgress = (firstSectionProgress * heartbeatCycles) % 1;
       
-      // 🔥 HEARTBEAT DURATION CONTROL 🔥
+      // �� HEARTBEAT DURATION CONTROL 🔥
       // Change this number to control how long each heartbeat lasts:
       // - 0.3 = heartbeat lasts 30% of cycle, black 70% (short pulse)
       // - 0.5 = heartbeat lasts 50% of cycle, black 50% (balanced)
@@ -560,12 +563,20 @@ function updateProgressBar() {
   const clockStory = document.getElementById("clock-story");
   const secondStory = document.getElementById("second-story");
   
+  // Debug logging
+  console.log("Elements found:", {
+    introStory: !!introStory,
+    firstStory: !!firstStory,
+    clockStory: !!clockStory,
+    secondStory: !!secondStory
+  });
+  
   // Define checkpoint sections with your specific names
   const checkpoints = [
     { element: introStory, name: "RUN", height: 700, position: 0 },
     { element: firstStory, name: "GROW", height: 1000, position: 1 },
     { element: clockStory, name: "ALARM", height: 2400, position: 2 },
-    { element: secondStory, name: "MORNING", height: 100, position: 3 }
+    { element: secondStory, name: "MORNING", height: 500, position: 3 }
   ];
   
   // Calculate checkpoint positions
@@ -574,7 +585,10 @@ function updateProgressBar() {
   
   for (let i = 0; i < checkpoints.length; i++) {
     const checkpoint = checkpoints[i];
-    if (!checkpoint.element) continue;
+    if (!checkpoint.element) {
+      console.log(`Checkpoint ${i} (${checkpoint.name}) element not found!`);
+      continue;
+    }
     
     const sectionHeight = windowHeight * (checkpoint.height / 100);
     checkpointPositions.push({
@@ -584,36 +598,169 @@ function updateProgressBar() {
       centerY: currentY + (sectionHeight / 2)
     });
     
+    console.log(`Checkpoint ${i} (${checkpoint.name}):`, {
+      startY: currentY,
+      endY: currentY + sectionHeight,
+      height: sectionHeight
+    });
+    
     currentY += sectionHeight;
   }
+  
+  console.log("Current scroll Y:", y);
+  console.log("Total document height:", document.documentElement.scrollHeight);
   
   // Find current checkpoint and progress within it
   let currentCheckpoint = null;
   let progressToNext = 0;
   let checkpointIndex = -1;
-  
-  for (let i = 0; i < checkpointPositions.length; i++) {
-    const checkpoint = checkpointPositions[i];
-    if (y >= checkpoint.startY && y < checkpoint.endY) {
-      currentCheckpoint = checkpoint;
-      checkpointIndex = i;
-      
-      // Calculate progress within current checkpoint (0 to 1)
-      const checkpointProgress = (y - checkpoint.startY) / (checkpoint.endY - checkpoint.startY);
-      progressToNext = checkpointProgress;
-      break;
+
+  // Check if secondStory is dominant (100% visible) - force MORNING
+  if (secondStory) {
+    const rect = secondStory.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+    const visibilityPercentage = (visibleHeight / viewportHeight) * 100;
+    
+    console.log("Second story visibility:", visibilityPercentage + "%");
+    
+    if (visibilityPercentage >= 20) {
+      // Force MORNING section when secondStory is 20% visible
+      currentCheckpoint = checkpoints[3]; // MORNING checkpoint
+      checkpointIndex = 3;
+      progressToNext = 1; // 100% progress
+      console.log("Forcing MORNING section due to 20% visibility");
     }
   }
+
+  // Check if clockStory is visible - force ALARM
+  if (clockStory && !currentCheckpoint) {
+    const rect = clockStory.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+    const visibilityPercentage = (visibleHeight / viewportHeight) * 100;
+    
+    console.log("Clock story visibility:", visibilityPercentage + "%");
+    
+    if (visibilityPercentage >= 20) {
+      // Force ALARM section when clockStory is 20% visible
+      currentCheckpoint = checkpoints[2]; // ALARM checkpoint
+      checkpointIndex = 2;
+      progressToNext = 1; // 100% progress
+      console.log("Forcing ALARM section due to 20% visibility");
+    }
+  }
+
+  // Check if firstStory is visible - force GROW
+  if (firstStory && !currentCheckpoint) {
+    const rect = firstStory.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+    const visibilityPercentage = (visibleHeight / viewportHeight) * 100;
+    
+    console.log("First story visibility:", visibilityPercentage + "%");
+    
+    if (visibilityPercentage >= 20) {
+      // Force GROW section when firstStory is 20% visible
+      currentCheckpoint = checkpoints[1]; // GROW checkpoint
+      checkpointIndex = 1;
+      progressToNext = 1; // 100% progress
+      console.log("Forcing GROW section due to 20% visibility");
+    }
+  }
+
+  // If no section was forced, use normal detection
+  // If MORNING wasn't forced, use normal detection
+  if (!currentCheckpoint) {
+    for (let i = 0; i < checkpointPositions.length; i++) {
+      const checkpoint = checkpointPositions[i];
+      
+      // Special handling for the last checkpoint
+      if (i === checkpointPositions.length - 1) {
+        // For the last checkpoint, include the end boundary
+        if (y >= checkpoint.startY) {
+          currentCheckpoint = checkpoint;
+          checkpointIndex = i;
+          
+          // Calculate progress within current checkpoint (0 to 1)
+          const checkpointProgress = (y - checkpoint.startY) / (checkpoint.endY - checkpoint.startY);
+          progressToNext = Math.min(checkpointProgress, 1); // Cap at 1
+          console.log(`In last checkpoint ${i} (${checkpoint.name}), progress:`, progressToNext);
+          break;
+        }
+      } else {
+        // For all other checkpoints, use the original logic
+        if (y >= checkpoint.startY && y < checkpoint.endY) {
+          currentCheckpoint = checkpoint;
+          checkpointIndex = i;
+          
+          // Calculate progress within current checkpoint (0 to 1)
+          const checkpointProgress = (y - checkpoint.startY) / (checkpoint.endY - checkpoint.startY);
+          progressToNext = checkpointProgress;
+          console.log(`In checkpoint ${i} (${checkpoint.name}), progress:`, progressToNext);
+          break;
+        }
+      }
+    }
+  }
+
+  console.log("Current checkpoint:", currentCheckpoint ? currentCheckpoint.name : "none");
   
   // Update progress bar
   if (currentCheckpoint) {
-    // Calculate overall progress including completed checkpoints
-    const completedProgress = checkpointIndex / (checkpoints.length - 1);
-    const currentProgress = progressToNext / (checkpoints.length - 1);
-    const totalProgress = completedProgress + currentProgress;
+    // Calculate progress within the current section based on scroll position
+    let sectionProgress = 0;
     
-    // Update progress fill
-    progressFill.style.width = (totalProgress * 100) + "%";
+    // Calculate progress based on actual scroll position within each section
+    if (checkpointIndex === 1 && currentCheckpoint.name === "GROW") {
+      // GROW section - calculate progress from start of firstStory to start of clockStory
+      const firstStoryRect = firstStory.getBoundingClientRect();
+      const clockStoryRect = clockStory.getBoundingClientRect();
+      const firstStoryTop = firstStoryRect.top + window.scrollY;
+      const clockStoryTop = clockStoryRect.top + window.scrollY;
+      const sectionHeight = clockStoryTop - firstStoryTop;
+      const scrollInSection = y - firstStoryTop;
+      sectionProgress = Math.max(0, Math.min(1, scrollInSection / sectionHeight));
+    } else if (checkpointIndex === 2 && currentCheckpoint.name === "ALARM") {
+      // ALARM section - calculate progress from start of clockStory to start of secondStory
+      const clockStoryRect = clockStory.getBoundingClientRect();
+      const secondStoryRect = secondStory.getBoundingClientRect();
+      const clockStoryTop = clockStoryRect.top + window.scrollY;
+      const secondStoryTop = secondStoryRect.top + window.scrollY;
+      const sectionHeight = secondStoryTop - clockStoryTop;
+      const scrollInSection = y - clockStoryTop;
+      sectionProgress = Math.max(0, Math.min(1, scrollInSection / sectionHeight));
+    } else if (checkpointIndex === 3 && currentCheckpoint.name === "MORNING") {
+      // MORNING section - calculate progress from start of secondStory to end of document
+      const secondStoryRect = secondStory.getBoundingClientRect();
+      const secondStoryTop = secondStoryRect.top + window.scrollY;
+      const documentHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+      const sectionHeight = documentHeight - windowHeight - secondStoryTop;
+      const scrollInSection = y - secondStoryTop;
+      sectionProgress = Math.max(0, Math.min(1, scrollInSection / sectionHeight));
+    } else if (checkpointPositions[checkpointIndex]) {
+      // Use normal calculation for non-forced checkpoints
+      const sectionStart = checkpointPositions[checkpointIndex].startY;
+      const sectionEnd = checkpointPositions[checkpointIndex].endY;
+      sectionProgress = (y - sectionStart) / (sectionEnd - sectionStart);
+      sectionProgress = Math.max(0, Math.min(1, sectionProgress));
+    }
+    
+    // Calculate progress bar position
+    const checkpointProgress = checkpointIndex / (checkpoints.length - 1);
+    
+    // For MORNING (last checkpoint), cap at 100%
+    if (checkpointIndex === 3) {
+      progressFill.style.width = "100%";
+    } else {
+      // For other checkpoints, move toward next checkpoint
+      const nextCheckpointProgress = (checkpointIndex + 1) / (checkpoints.length - 1);
+      const progressBetweenCheckpoints = checkpointProgress + (sectionProgress * (nextCheckpointProgress - checkpointProgress));
+      
+      // Update progress fill
+      progressFill.style.width = (progressBetweenCheckpoints * 100) + "%";
+    }
     
     // Update text with current checkpoint name
     progressText.textContent = currentCheckpoint.name;
@@ -639,11 +786,13 @@ function updateProgressBar() {
 
 // Update checkpoint circle states
 function updateCheckpointStates(currentIndex, totalCheckpoints) {
-  // Remove existing checkpoints
+  // Remove existing checkpoints and their texts
   const existingCheckpoints = document.querySelectorAll('.checkpoint');
+  const existingTexts = document.querySelectorAll('.checkpoint-text');
   existingCheckpoints.forEach(cp => cp.remove());
+  existingTexts.forEach(txt => txt.remove());
   
-  // Create checkpoint circles
+  // Create checkpoint circles with individual text labels
   for (let i = 0; i < totalCheckpoints; i++) {
     const checkpoint = document.createElement('div');
     checkpoint.className = 'checkpoint';
@@ -655,7 +804,36 @@ function updateCheckpointStates(currentIndex, totalCheckpoints) {
       checkpoint.classList.add('active');
     }
     
+    // Create individual text label for each checkpoint
+    const checkpointText = document.createElement('div');
+    checkpointText.className = 'checkpoint-text';
+    checkpointText.textContent = checkpointNames[i];
+    
+    // Only show text for the active checkpoint
+    if (i === currentIndex) {
+      checkpointText.classList.add('active');
+      checkpointText.style.display = 'block';
+    } else {
+      checkpointText.style.display = 'none';
+    }
+    
+    // Position each text under its corresponding circle
+    // Calculate position based on circle index
+    const containerWidth = 400; // Match the progress container width
+    const circleSpacing = containerWidth / (totalCheckpoints - 1);
+    const circlePosition = i * circleSpacing;
+
+    checkpointText.style.position = 'absolute';
+    checkpointText.style.left = (circlePosition + 40) + 'px'; // Increased from 20px to 40px
+    checkpointText.style.transform = 'translateX(-50%)';
+    checkpointText.style.top = '55px';
+    checkpointText.style.textAlign = 'center';
+    checkpointText.style.fontSize = '1rem';
+    checkpointText.style.width = '80px';
+    checkpointText.style.marginLeft = '-40px';
+    
     document.getElementById('progress-container').appendChild(checkpoint);
+    document.getElementById('progress-container').appendChild(checkpointText);
   }
 }
 

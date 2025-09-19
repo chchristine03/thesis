@@ -120,7 +120,7 @@ html, body {
   opacity: 0.9;
   margin: 0;
   padding: 20px;
-  font-family: "allotropic", sans-serif;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
   font-weight: 300;
   font-style: normal;  
   /* Make sure it doesn't interfere with other elements */
@@ -142,7 +142,7 @@ html, body {
   opacity: 0.5;
   margin: 0;
   padding: 20px;
-  font-family: "allotropic", sans-serif;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
   font-weight: 300;
   font-style: normal;  
   /* Make sure it doesn't interfere with other elements */
@@ -560,12 +560,12 @@ audio {
 
 #progress-text {
   position: absolute;
-  top: -30px;
+  top: 35px;
   left: 50%;
   transform: translateX(-50%);
   color: #ece29f;
   font-size: 0.9rem;
-  font-family: "allotropic", sans-serif;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
   font-weight: 300;
   text-align: center;
   opacity: 0.9;
@@ -619,6 +619,32 @@ audio {
   background: rgba(0, 0, 0, 0.9);
 }
 
+#progress-text {
+  display: none;
+}
+
+/* Individual checkpoint text styling */
+.checkpoint-text {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ece29f;
+  font-size: 0.8rem;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  opacity: 0.3;
+  white-space: nowrap;
+  z-index: 2;
+  text-shadow: 0 0 8px rgba(236, 226, 159, 0.6);
+  transition: opacity 0.3s ease;
+}
+
+.checkpoint-text.active {
+  opacity: 0.9;
+}
+
 /* Mobile responsive progress bar */
 @media (max-width: 768px) {
   #progress-container {
@@ -637,15 +663,27 @@ audio {
     height: 6px;
   }
   
-  #progress-text {
-    font-size: 0.8rem;
-    top: -25px;
+  .checkpoint-text {
+    font-size: 0.7rem;
+    top: 30px;
   }
-}  
+}
+
+@media (max-width: 480px) {
+  #progress-container {
+    width: 250px;
+  }
+  
   .checkpoint {
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
   }
+  
+  .checkpoint-text {
+    font-size: 0.6rem;
+    top: 28px;
+  }
+}
 
 /* Ensure other sections appear after intro */
 #first-story {
@@ -660,10 +698,11 @@ audio {
 }
 
 #second-story {
+  background-image: linear-gradient(rgb(108, 0, 0),rgba(0, 0, 0, 0)) !important;
   position: relative !important;
-  z-index: 2 !important;
+  z-index: 0 !important;
+  height: 100vh !important;
 }
-
 
 /* Adjust title positioning for 100vh */
 .intro-title {
@@ -679,7 +718,7 @@ audio {
   opacity: 0.9 !important;
   margin: 0 !important;
   padding: 20px !important;
-  font-family: "allotropic", sans-serif !important;
+  font-family: "helvetica-neue-lt-pro", sans-serif !important;
   font-weight: 300 !important;
   font-style: normal !important;
   pointer-events: none !important;
@@ -704,6 +743,7 @@ audio {
   background-image: linear-gradient(rgb(108, 0, 0),rgba(0, 0, 0, 0)) !important;
   position: relative !important;
   z-index: 0 !important;
+  height: 100vh !important;
 }
 
 /* Ensure cursor trail images are visible */
