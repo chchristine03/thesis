@@ -13,14 +13,17 @@
     <audio id="backgroundMusic" autoplay loop>
         <source src="sound/let it happen no voice.mp3" type="audio/mpeg">
     </audio>
-    
+    <div class="selection-header">
+        <div class="top left">Which</div>
+        <div class="middle left">Best</div> 
+        <div class="bottom left">Represents</div>
+        <div class="bottom right">Your Life?</div>
+        <button id="shuffleImages" class="shuffle-btn middle right">
+            Shuffle
+        </button>
+    </div>
     <div id="selection-container">
-        <div class="selection-header">
-            <h1>What Best Represents Your Life?</h1>
-            <button id="shuffleImages" class="shuffle-btn">
-                Shuffle Images
-            </button>
-        </div>
+       
         
         <div class="selection-grid" id="selectionGrid">
             <!-- Images will be loaded here by JavaScript -->

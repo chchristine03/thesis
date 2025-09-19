@@ -26,26 +26,45 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 20px 20px 20px 20px;
 }
 
 .selection-header {
-    text-align: center;
-    margin-bottom: 15px;
-    color: white;
-}
-
-.selection-header h1 {
+    color: #a061d2;
     font-family: "helvetica-neue-lt-pro", sans-serif;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 7rem;
     font-weight: 300;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 0 20px rgba(25, 6, 37, 0.998);; /* Horizontal, Vertical, Blur, Color */
+}
+.top{
+    position: absolute;
+    top: 4vh;
+    z-index: 100;
+}
+.middle{
+    position: absolute;
+    top: 45vh;
+    z-index: 100;
+}
+.right{
+    position: absolute;
+    right: 4vw;
+    z-index: 100;
+}
+.bottom{
+    position: absolute;
+    bottom: 4vh;
+    z-index: 100;
+}
+.left{
+    position: absolute;
+    left: 4vw;
+    z-index: 100;
 }
 
 .shuffle-btn {
     padding: 12px 20px;
-    background: rgba(255,255,255,0.2);
+    background: #87878772;
     color: white;
     border: 2px solid rgba(255,255,255,0.3);
     border-radius: 8px;
@@ -53,10 +72,14 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+    margin: 10px auto;
+    text-align: center;
+    display: block;
+    margin-right: 9vw;
 }
 
 .shuffle-btn:hover {
-    background: rgba(255,255,255,0.3);
+    background: #7512c772;
     border-color: rgba(255,255,255,0.5);
     transform: translateY(-2px);
 }
@@ -68,7 +91,9 @@ body {
     gap: 15px;
     max-width: 900px;
     width: 100%;
-    margin-bottom: 20px;
+    margin: 20px 0 20px 0;
+    position: absolute;
+    top: 7%;
 }
 
 .selection-item {
