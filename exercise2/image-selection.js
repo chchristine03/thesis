@@ -224,3 +224,31 @@ class ImageSelection {
 document.addEventListener('DOMContentLoaded', () => {
     new ImageSelection();
 });
+
+// Audio handling for image selection page
+document.addEventListener('DOMContentLoaded', () => {
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    if (backgroundMusic) {
+        // Set volume to 50%
+        backgroundMusic.volume = 0.5;
+        
+        // Handle autoplay issues
+        const playAudio = () => {
+            backgroundMusic.play().catch(error => {
+                console.log('Autoplay prevented, user interaction required');
+                // Try again after user interaction
+                document.addEventListener('click', () => {
+                    backgroundMusic.play().catch(e => console.log('Audio play failed:', e));
+                }, { once: true });
+            });
+        };
+        
+        // Try to play immediately
+        playAudio();
+        
+        console.log('Background music initialized');
+    } else {
+        console.log('Background music element not found');
+    }
+});
